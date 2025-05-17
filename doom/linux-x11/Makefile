@@ -70,8 +70,8 @@ help:
 	@echo "  make run SIZE=big     # Run Doom at 960x720"
 	@echo
 	@echo "Examples:"
-	@echo "  make clean all run"
-	@echo "  make run SIZE=big"
+	@echo "  make clean all"
+	@echo "  make clean all run SIZE=big"
 
 WAD_FILE=*wad
 DISPLAY_NUM=:2
