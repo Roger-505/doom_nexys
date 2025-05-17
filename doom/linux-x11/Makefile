@@ -79,13 +79,13 @@ SIZE ?= medium
 
 # Map SIZE to resolution and flag
 ifeq ($(SIZE),small)
-    RESOLUTION := 320x240x8
+    RESOLUTION := 320x200x8
     RES_FLAG := -1
 else ifeq ($(SIZE),medium)
-    RESOLUTION := 640x480x8
+    RESOLUTION := 640x400x8
     RES_FLAG := -2
 else ifeq ($(SIZE),big)
-    RESOLUTION := 960x720x8
+    RESOLUTION := 960x600x8
     RES_FLAG := -3
 else
     $(error Unknown SIZE value '$(SIZE)'. Use small, medium, or big)
