@@ -6,7 +6,7 @@ TARGET = boot_main
 
 SOURCES = boot_main.S spi_uimage_loader.S
 
-all: $(TARGET).mem $(TARGET).ub
+all: $(TARGET).mem
 
 $(TARGET).elf: $(SOURCES)
 	$(TOOLCHAIN_PREFIX)gcc -nostartfiles -march=rv32im -mabi=ilp32 -Tlink.ld -o $@ $^
@@ -26,19 +26,5 @@ $(TARGET).dis: $(TARGET).elf
 $(TARGET).ihex: $(TARGET).elf
 	$(TOOLCHAIN_PREFIX)objcopy -O ihex $< $@
 
-$(TARGET).ub: $(TARGET).bin
-	mkimage \
-	-A riscv \
-	-C none \
-	-T standalone \
-	-a 0x0 \
-	-e $(RESET_VECTOR) \
-	-n '$@' \
-	-d $< \
-	$@
-
-$(TARGET).ubvh: $(TARGET).ub
-	objcopy --change-addresses $(FLASH_ADDR) -I binary -O verilog $< $@
-
 clean:
-	rm -f *.mem *.bin *.elf *.ubvh *.vh *.elf *.ub
+	rm -f *.mem *.bin *.elf *.vh *.elf

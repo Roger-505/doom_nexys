@@ -38,25 +38,32 @@ console_init(void)
 void
 console_putchar(char c)
 {
-	uart_regs->data = c;
+    if (c == '\n') {
+        console_putchar('\r');  // prepend carriage return
+    }
+
+    while (!(*(volatile uint8_t *)(UART_BASE + REG_LSR) & LSR_THRE)){ /* do nothing */ }; 
+
+	uart_regs->data = (uint32_t)c;
 }
 
 char
 console_getchar(void)
 {
-	int32_t c;
-	do {
-		c = uart_regs->data;
-	} while (c & 0x80000000);
+	int32_t c = 1;
+	//do {
+	//	c = uart_regs->data;
+	//} while (c & 0x80000000);
 	return c;
 }
 
 int
 console_getchar_nowait(void)
 {
-	int32_t c;
-	c = uart_regs->data;
-	return c & 0x80000000 ? -1 : (c & 0xff);
+	int32_t c = 1;
+	// c = uart_regs->data;
+	// return c & 0x80000000 ? -1 : (c & 0xff);
+    return c;
 }
 
 void

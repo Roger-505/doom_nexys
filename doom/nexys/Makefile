@@ -41,7 +41,7 @@ SOURCES_doom := $(filter-out d_main.c s_sound.c, $(SOURCES_doom))
 SOURCES_doom_arch := $(wildcard $(SRC_DIR_arch)/*.c $(SRC_DIR_arch)/*.S)
 
 # Default target
-all: $(BIN)
+all: $(BIN) uboot_images
 
 # Build ELF
 $(ELF): | $(BIN_DIR)
@@ -63,6 +63,12 @@ clean:
 
 # SD card flashing + Serial
 include ./utils.mk
+
+# OpenOCD commands
+include ./debug.mk
+
+# Uboot 
+include ./ub.mk
 
 .PHONY: all clean prog prog_wad
 .PRECIOUS: $(ELF)

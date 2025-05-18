@@ -30,7 +30,7 @@
 #include "console.h"
 
 
-#define LIBC_DEBUG
+// #define LIBC_DEBUG
 
 
 // HEAP handling
@@ -45,7 +45,7 @@ _sbrk(intptr_t increment)
 	void *rv = heap_end;
 	heap_end += increment;
 #ifdef LIBC_DEBUG
-	console_printf("Heap extended to %08x\n", (uint32_t)heap_end);
+    console_printf("Heap extended to %08x\n", (uint32_t)heap_end);
 #endif
 	return rv;
 }
