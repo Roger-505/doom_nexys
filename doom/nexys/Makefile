@@ -61,12 +61,8 @@ $(BIN_DIR):
 clean:
 	rm -rf $(BIN_DIR) *.o *.gen.h
 
-# Program targets
-prog: $(BIN)
-	$(ICEPROG) -o 1M $<
-
-prog_wad: data/doomu.wad
-	$(ICEPROG) -o 2M $<
+# SD card flashing + Serial
+include ./utils.mk
 
 .PHONY: all clean prog prog_wad
 .PRECIOUS: $(ELF)
