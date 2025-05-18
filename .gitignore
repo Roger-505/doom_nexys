@@ -9,7 +9,9 @@
 *.runs/
 *.hw/
 *.sim/
-*.backup/
+*.ip_user_files/
+*.srcs/
+.backup/
 
 # Vivado project file (optional)
 *.xpr
