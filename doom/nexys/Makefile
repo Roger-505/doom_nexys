@@ -1,74 +1,77 @@
-# Cross toolchain prefix
-CROSS ?= riscv64-unknown-elf-
+######################
+# === Doom Nexys === #
+######################
+TARGET    := doom_nexys
+BUILD_DIR := build
+CROSS     ?= riscv64-unknown-elf-
 
-# Tools
-CC = $(CROSS)gcc
-OBJCOPY = $(CROSS)objcopy
-SIZE = $(CROSS)size
-NEXYS_PROG = openocd
+# === Tools ===
+CC       := $(CROSS)gcc
+OBJCOPY  := $(CROSS)objcopy
+SIZE     := $(CROSS)size
+NEXYS_PROG := openocd
 
-# Directories
-SRC_DIR_doom = ../common/
-SRC_DIR_arch = src
-INCLUDE_DIR_arch = include
-BIN_DIR = bin
+############################
+# === Base Directories === #
+############################
+BOOT_DIR     := boot
+BUILD_DIR    := build
+FIRMWARE_DIR := firmware
+FPGA_DIR	 := fpga
+MK_DIR       := mk
+SCRIPTS_DIR  := scripts
+COMMON_DIR   := ../common
 
-# Output files
-ELF = $(BIN_DIR)/doom-riscv.elf
-BIN = $(BIN_DIR)/doom-riscv.bin
-LD_SCRIPT = $(SRC_DIR_arch)/riscv.lds
+# === Boot subdirectories ===
+B_LD_DIR	  := $(BOOT_DIR)/linker
+B_SCRIPTS_DIR := $(BOOT_DIR)/scripts
+B_SRC_DIR	  := $(BOOT_DIR)/src
 
-# Compiler flags
-CFLAGS = -Wall \
-         -O2 \
-         -march=rv32im \
-         -mabi=ilp32 \
-         -ffreestanding \
-         -flto \
-         -nostartfiles \
-         -fomit-frame-pointer \
-         -Wl,--gc-section \
-         --specs=nano.specs \
-         -I$(SRC_DIR_doom) \
-         -I$(INCLUDE_DIR_arch) \
-         -DNORMALUNIX
+# === Firmware subdirectories ===
+SRC_DIR	:= $(FIRMWARE_DIR)/src
+INC_DIR	:= $(FIRMWARE_DIR)/include
+LD_DIR	:= $(FIRMWARE_DIR)/linker
 
-# Include source list
-include $(SRC_DIR_doom)sources.mk
+# === FPGA subdirectories === 
+F_BIT_DIR	:= $(FPGA_DIR)/bitstreams
+F_XDC_DIR	:= $(FPGA_DIR)/constraints
+F_RTL_DIR	:= $(FPGA_DIR)/rtl
+F_PRJ_DIR	:= $(FPGA_DIR)/vivado/proj_1
 
-# Source filtering
-SOURCES_doom := $(filter-out d_main.c s_sound.c, $(SOURCES_doom))
-SOURCES_doom_arch := $(wildcard $(SRC_DIR_arch)/*.c $(SRC_DIR_arch)/*.S)
+#################
+# === Files === #
+#################
+FORMATS := elf bin ub ubvh
+OUTPUTS := $(addprefix $(BUILD_DIR)/$(TARGET)., $(FORMATS))
+MK := $(wildcard $(MK_DIR)/*.mk) \
+ 	  $(COMMON_DIR)/sources.mk
 
-# Default target
-all: $(BIN) uboot_images
+# === Boot files === 
+B_LD 	 := $(B_LD_DIR)/$(TARGET)_boot.lds
+B_SRC    := $(wildcard $(B_SRC_DIR)/*.mk)
+B_SCRIPT := $(B_SCRIPTS_DIR)/$(TARGET)_makehex.py
 
-# Build ELF
-$(ELF): | $(BIN_DIR)
-	$(CC) $(CFLAGS) -Wl,-Bstatic,-T,$(LD_SCRIPT) -o $@ \
-		$(addprefix $(SRC_DIR_doom),$(SOURCES_doom)) $(SOURCES_doom_arch)
-	$(SIZE) $@
+# === Firmware files ===
+INC := $(wildcard $(INC_DIR)/*.h)
+LD  := $(LD_DIR_arch)/$(TARGET).lds
+SRC := $(wildcard $(SRC_DIR)/*.c) \
+       $(wildcard $(SRC_DIR)/*.S) \
 
-# Build BIN from ELF
-$(BIN): $(ELF)
-	$(OBJCOPY) -O binary $< $@
+# === FPGA files === 
+F_BIT := $(wildcard $(F_BIT_DIR)/*.bit)
+F_XDC := $(wildcard $(F_XDX_DIR)/*.xdc)
+F_RTL := $(wildcard $(F_RTL_DIR)/**/*.v) \
+         $(wildcard $(F_RTL_DIR)/**/*.vh) \
+         $(wildcard $(F_RTL_DIR)/**/*.sv)
+F_TCL := $(F_PRJ_DIR)/$(TARGET).tcl
 
-# Ensure bin directory exists
-$(BIN_DIR):
-	mkdir -p $@
+#########################
+# === Include recipes ===
+#########################
+include $(MK_FILES)
 
-# Clean
-clean:
-	rm -rf $(BIN_DIR) *.o *.gen.h
+all: 
+	touch lmao
 
-# SD card flashing + Serial
-include ./utils.mk
-
-# OpenOCD commands
-include ./debug.mk
-
-# Uboot 
-include ./ub.mk
-
-.PHONY: all clean prog prog_wad
-.PRECIOUS: $(ELF)
+# === Precious ===
+# ....

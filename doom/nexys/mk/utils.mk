@@ -1,10 +1,11 @@
-.PHONY: all detect_usb format mount copy unmount
-
+# === Detect last connected USB device ===
 USB_DEV := $(shell lsblk -o NAME,TRAN,TYPE -n | awk '$$2 == "usb" && $$3 == "disk" { print "/dev/" $$1 }' | \
             xargs -I{} stat -c "%Y {}" {} 2>/dev/null | sort -nr | head -n1 | cut -d' ' -f2)
-MOUNT_POINT := /mnt/usb
-VIVADO_IMPL := ./vivado/project_1/project_1.runs/impl_1
-BITSTREAM := $(VIVADO_IMPL)/rvfpganexys.bit
+
+# === Directories === 
+MNT := /mnt/usb
+VIVADO_IMPL := $(F_PRJ_DIR)/impl_1
+F_BIT		:= $(filter $(TARGET).bit,$(F_BIT))
 TARGET_NAME := boot.bit
 sd: detect_usb format mount copy unmount
 
@@ -39,8 +40,6 @@ unmount:
 	@echo "Unmounting USB..."
 	sudo umount $(MOUNT_POINT)
 	@echo "Done."
-
-.PHONY: serial
 
 serial:
 	@LAST_TTY=$$(dmesg | grep -oP 'ttyUSB\d+' | tail -1); \

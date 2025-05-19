@@ -1,4 +1,4 @@
-SOURCES_doom := \
+SRC_doom := \
 	am_map.c \
 	d_items.c \
 	d_main.c \
@@ -58,7 +58,7 @@ SOURCES_doom := \
 	z_zone.c \
 	$(NULL)
 
-HEADERS_doom := \
+HDR_doom := \
 	am_map.h \
 	d_englsh.h \
 	d_event.h \

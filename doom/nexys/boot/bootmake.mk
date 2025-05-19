@@ -27,4 +27,4 @@ $(TARGET).ihex: $(TARGET).elf
 	$(TOOLCHAIN_PREFIX)objcopy -O ihex $< $@
 
 clean:
-	rm -f *.mem *.bin *.elf *.vh *.elf
+	rm -f *.mem *.bin *.elf *.vh *.elf *.ub
