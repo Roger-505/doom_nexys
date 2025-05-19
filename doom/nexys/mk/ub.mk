@@ -2,12 +2,10 @@
 RESET_VECTOR ?= 0x0
 FLASH_ADDR   ?= 0x0
 
-# === Image filtering === 
-B_BIN := $(filter %.ub,$(OUTPUTS))
-B_VH  := $(filter %.vh,$(OUTPUTS))
+gen_ub: $(UB)
 
 # === Build U-boot image === # 
-$(B_BIN): $(BIN) | $(BIN_DIR)
+$(UB): $(BIN) | $(BIN_DIR)
 	mkimage \
 		-A riscv \
 		-C none \

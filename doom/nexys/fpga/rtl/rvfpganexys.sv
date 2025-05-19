@@ -23,7 +23,7 @@
 
 `default_nettype none
 module rvfpganexys
-  #(parameter bootrom_file  = "boot_main.mem")
+  #(parameter bootrom_file  = "doom_nexys_rom.mem")
    (input wire 	       clk,
     input wire 	       rstn,
     output wire [12:0] ddram_a,
