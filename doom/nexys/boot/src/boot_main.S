@@ -126,4 +126,13 @@ spi_boot_str:
 	.string "Booting from SPI Flash\r\n"
 boot_fail_str:
 	.string "Boot has failed!\r\n"
-
+image_size_str:
+	.string "Image size: "
+ram_addr_str:
+	.string "RAM base address: "
+reset_vec_str:
+	.string "Reset vector address: "
+start_copy_str:
+	.string "Starting RAM copy...\r\n"
+jump_entry_str:
+	.string "Jumping to entry point\r\n"

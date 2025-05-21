@@ -1,4 +1,3 @@
-RESET_VECTOR ?= 0
 FLASH_ADDR ?= 0x0
 
 gen_rom: $(B_MEM)

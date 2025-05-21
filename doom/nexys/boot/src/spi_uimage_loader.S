@@ -92,7 +92,6 @@ spi_init:
 	li	t1, 0x56190527
 	bne	t1, a1, spi_init
 
-
 read_header:
 	/* Dummy read two words */
 	jal	spi_xfer
@@ -128,6 +127,7 @@ read_header:
 
 	/* Clear number of copied bytes */
 	addi	s4, zero, 0
+	
 copy_to_ram:
 	jal	spi_xfer
 

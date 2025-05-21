@@ -2,6 +2,7 @@
 # === Doom Nexys === #
 ######################
 TARGET    	:= doom_nexys
+DATA		:= doom1
 BOOT_TARGET := $(TARGET)_rom
 BUILD_DIR 	:= build
 CROSS     	?= riscv64-unknown-elf-
@@ -9,6 +10,7 @@ CROSS     	?= riscv64-unknown-elf-
 # === Tools ===
 CC       := $(CROSS)gcc
 OBJCOPY  := $(CROSS)objcopy
+DB		 := $(CROSS)gdb
 SIZE     := $(CROSS)size
 NEXYS_PROG := openocd
 
@@ -29,9 +31,10 @@ B_SCRIPTS_DIR := $(BOOT_DIR)/scripts
 B_SRC_DIR	  := $(BOOT_DIR)/src
 
 # === Firmware subdirectories ===
-SRC_DIR	:= $(FIRMWARE_DIR)/src
-INC_DIR	:= $(FIRMWARE_DIR)/include
-LD_DIR	:= $(FIRMWARE_DIR)/linker
+SRC_DIR	 := $(FIRMWARE_DIR)/src
+INC_DIR	 := $(FIRMWARE_DIR)/include
+LD_DIR	 := $(FIRMWARE_DIR)/linker
+DATA_DIR := $(FIRMWARE_DIR)/data
 
 # === FPGA subdirectories === 
 F_BIT_DIR	:= $(FPGA_DIR)/bitstreams
@@ -56,6 +59,7 @@ ELF  := $(BUILD_DIR)/$(TARGET).elf
 BIN  := $(BUILD_DIR)/$(TARGET).bin
 UB   := $(BUILD_DIR)/$(TARGET).ub
 BIT	 := $(F_BIT_DIR)/$(TARGET).bit
+WADO := $(BUILD_DIR)/$(DATA).o
 
 # === Bootrom outputs ===
 B_MEM := $(BUILD_DIR)/$(BOOT_TARGET).mem
@@ -82,6 +86,9 @@ F_RTL := $(wildcard $(F_RTL_DIR)/**/*.v) \
          $(wildcard $(F_RTL_DIR)/**/*.vh) \
          $(wildcard $(F_RTL_DIR)/**/*.sv)
 F_TCL := $(F_PRJ_DIR)/vivado.tcl
+
+# === WAD file ===
+WAD		 	:= $(DATA_DIR)/$(DATA).wad
 
 #########################
 # === Include recipes ===

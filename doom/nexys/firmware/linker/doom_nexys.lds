@@ -2,15 +2,23 @@ OUTPUT_ARCH("riscv")
 ENTRY(_start)
 
 MEMORY {
-    RAM (wxa!ri) : ORIGIN = 0x00000000, LENGTH = 64M
+    WAD (rwx)    : ORIGIN = 0x00000000, LENGTH = 5M     /* doom1.wad */
+    RAM (wxa!ri) : ORIGIN = 0x00420000, LENGTH = 64M
 }
 
 SECTIONS {
+    /* Place WAD at 0x00000000 */
+    .wad : {
+        _binary_doom1_wad_start = .;
+        KEEP(*(.wad))
+        _binary_doom1_wad_end = .;
+    } > WAD
+
     /* Top of stack is at the end of RAM */
     __stacktop = ORIGIN(RAM) + LENGTH(RAM);
 
     /* TEXT SECTION: code and read-only data */
-    .text :
+    .text ORIGIN(RAM) :
     {
         . = ALIGN(4);
         *(.text.start)
@@ -27,6 +35,7 @@ SECTIONS {
         _etext = .;
         _sidata = _etext; /* Start of initialized data in ROM */
     } > RAM
+
 
     /* DATA SECTION: initialized variables (copied from ROM) */
     .data : AT(_sidata)
@@ -75,5 +84,6 @@ SECTIONS {
     } > RAM
 
     /* Fallback default stack size */
-    __stack_size = DEFINED(__stack_size) ? __stack_size : 4K;
+    /* __stack_size = DEFINED(__stack_size) ? __stack_size : 4K; */
+    __stack_size = 128K;
 }

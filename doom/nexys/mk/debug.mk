@@ -9,4 +9,5 @@ program: $(BIT)
 	openocd -c "set BITFILE $<" -f $(OPENOCD_DIR)/program.cfg
 
 debug:
+	st -e $(DB) -x .gdbinit $(ELF) &
 	openocd -f $(OPENOCD_DIR)/debug.cfg

@@ -5,14 +5,23 @@ SRC_doom := $(filter-out d_main.c s_sound.c, $(SRC_doom))
 # === Flags ===
 CFLAGS := -Wall -O2 -march=rv32im -mabi=ilp32 -ffreestanding -flto -nostartfiles \
           -fomit-frame-pointer -Wl,--gc-section --specs=nano.specs \
-          -I$(COMMON_DIR) -I$(INC_DIR) -DNORMALUNIX
+          -I$(COMMON_DIR) -I$(INC_DIR) -DNORMALUNIX -g
 
 gen_bin: $(BIN)
 
+# === WAD build === 
+$(WADO): $(WAD)
+	$(OBJCOPY) \
+		--input binary \
+		--output elf32-littleriscv \
+		--binary-architecture riscv \
+		--rename-section .data=.wad,alloc,load,contents,readonly,data \
+		$< $@
+
 # === ELF build ===
-$(ELF): | $(BUILD_DIR)
+$(ELF): $(WADO) | $(BUILD_DIR)
 	$(CC) $(CFLAGS) -Wl,-Bstatic,-T,$(LD) -o $@ \
-		$(addprefix $(COMMON_DIR)/,$(SRC_doom)) $(SRC)
+		$(addprefix $(COMMON_DIR)/,$(SRC_doom)) $(SRC) $(WADO)
 	$(SIZE) $@
 
 # === BIN build ===
