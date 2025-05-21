@@ -23,7 +23,7 @@
 
 #pragma once
 
-#define VID_BASE	0x81000000
+#define VID_BASE	0x80000000
 #define UART_BASE	0x80002000
 #define REG_LSR     (5 * 4)      // Line Status Register offset
 #define LSR_THRE    0x20         // Transmitter Holding Register Empty

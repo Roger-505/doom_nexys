@@ -27,7 +27,7 @@ SOURCES_doom_arch = \
 	$(NULL)
 
 OBJS += $(addprefix objs/, \
-	$(SOURCES_doom:.c=.o) \
+	$(SRC_doom:.c=.o) \
 	$(addprefix src/, $(SOURCES_doom_arch:.c=.o)) \
 )
 

@@ -60,7 +60,8 @@ console_getchar(void)
 int
 console_getchar_nowait(void)
 {
-	int32_t c = 1;
+    /* Implement getchar if we want UART keyboard */
+	int32_t c = -1;
 	// c = uart_regs->data;
 	// return c & 0x80000000 ? -1 : (c & 0xff);
     return c;

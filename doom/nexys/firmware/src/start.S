@@ -20,6 +20,11 @@
 	.section .text.start
 	.global _start
 _start:
+	/* Core config */ 
+	csrw mcycle, zero
+	csrw mcycleh, zero
+	li t1, 0x55555555
+	csrw 0x7c0, t1
 
 	// Init .data section from flash
 	la a0, _sidata

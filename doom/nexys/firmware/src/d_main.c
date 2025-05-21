@@ -344,12 +344,20 @@ void D_Display (void)
 //
 //  D_DoomLoop
 //
+#define READ_CSR(reg)({int val; asm volatile ("csrr %0, " #reg : "=r"(val)); val; })
+
 void D_DoomLoop (void)
 {
     I_InitGraphics ();
+    
+    int start_cycle;
+    int end_cycle;
+    int num_cycles;
 
     while (1)
     {
+
+        start_cycle = READ_CSR(mcycle);
         // frame syncronous IO operations
         I_StartFrame ();
 
@@ -373,6 +381,10 @@ void D_DoomLoop (void)
 
         // Update display, next frame, with current state.
         D_Display ();
+
+        end_cycle = READ_CSR(mcycle);        
+        num_cycles = end_cycle - start_cycle;
+        printf("Number of cycles on this loop: %d", num_cycles);
     }
 }
 

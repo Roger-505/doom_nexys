@@ -74,10 +74,9 @@ I_GetTime(void)
 		vt_base += 65536;
 	vt_last = vt_now;
 
-	/* TIC_RATE is 35 in theory */
+    // Tic rate 35Hz
 	return (vt_base + vt_now) >> 1;
 }
-
 
 static void
 I_GetRemoteEvent(void)
