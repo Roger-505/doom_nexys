@@ -25,6 +25,16 @@ _start:
 	csrw mcycleh, zero
 	li t1, 0x55555555
 	csrw 0x7c0, t1
+	
+	/*
+	fence.i              
+    	li   t0, 0x00000000  
+    	csrw 0x7F9, t0       
+    	fence.i              
+
+    	li   t1, 0xFF        
+    	csrw 0x7F8, t1       
+	*/ 
 
 	// Init .data section from flash
 	la a0, _sidata

@@ -88,7 +88,7 @@ F_RTL := $(wildcard $(F_RTL_DIR)/**/*.v) \
 F_TCL := $(F_PRJ_DIR)/vivado.tcl
 
 # === WAD file ===
-WAD		 	:= $(DATA_DIR)/$(DATA).wad
+WAD	:= $(DATA_DIR)/$(DATA).wad
 
 #########################
 # === Include recipes ===
