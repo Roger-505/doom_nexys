@@ -52,7 +52,10 @@ module rvfpganexys
     output wire        o_accel_cs_n,
     output wire        o_accel_mosi,
     input wire         i_accel_miso,
-    output wire        accel_sclk);
+    output wire        accel_sclk,
+    output wire [11:0] rgb,
+    output wire hsync,
+    output wire vsync);
 
    wire [15:0] 	       gpio_out;
 
@@ -64,6 +67,7 @@ module rvfpganexys
    localparam RAM_SIZE     = 32'h10000;
 
    wire 	 clk_core;
+   wire      clk_vga;
    wire 	 rst_core;
    wire 	 user_clk;
    wire 	 user_rst;
@@ -72,6 +76,7 @@ module rvfpganexys
      (.i_clk (user_clk),
       .i_rst (user_rst),
       .o_clk_core (clk_core),
+      .o_clk_vga  (clk_vga),
       .o_rst_core (rst_core));
 
    AXI_BUS #(32, 64, 6, 1) mem();
@@ -195,11 +200,21 @@ module rvfpganexys
       .dmi_stat       (2'd0),
       .version        (4'd1));
 
+      reg [11:0] rgb_reg;
+      wire video_on;
+ 
+      always @(posedge clk_core) begin
+            rgb_reg <= i_sw[11:0];
+      end   
+
+      assign rgb = (video_on) ? rgb_reg : 12'b0;
+
    swervolf_core
      #(.bootrom_file (bootrom_file),
        .clk_freq_hz  (32'd50_000_000))
    swervolf
      (.clk  (clk_core),
+      .clk_vga (clk_vga),
       .rstn (~rst_core),
       .dmi_reg_rdata  (dmi_reg_rdata),
       .dmi_reg_wdata  (dmi_reg_wdata),
@@ -260,7 +275,10 @@ module rvfpganexys
       .o_accel_sclk   (accel_sclk),
       .o_accel_cs_n   (o_accel_cs_n),
       .o_accel_mosi   (o_accel_mosi),
-      .i_accel_miso   (i_accel_miso));
+      .i_accel_miso   (i_accel_miso),
+      .hsync          (hsync),
+      .vsync          (vsync),
+      .video_on       (video_on));
 
    always @(posedge clk_core) begin
       o_led[15:0] <= gpio_out[15:0];

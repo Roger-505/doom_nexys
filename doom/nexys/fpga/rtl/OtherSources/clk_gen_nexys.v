@@ -25,6 +25,7 @@ module clk_gen_nexys
   (input  i_clk,
    input      i_rst,
    output     o_clk_core,
+   output     o_clk_vga,
    output reg o_rst_core);
 
    wire   clkfb;
@@ -33,14 +34,15 @@ module clk_gen_nexys
 
    PLLE2_BASE
      #(.BANDWIDTH("OPTIMIZED"),
-       .CLKFBOUT_MULT(16),
-       .CLKIN1_PERIOD(10.0), //100MHz
-       .CLKOUT0_DIVIDE(32),
+       .CLKFBOUT_MULT(16),      // VCO = 100MHZ*16 = 1600MHZ      
+       .CLKIN1_PERIOD(10.0),    // T=1/100MHZ=10ns
+       .CLKOUT0_DIVIDE(32),     // CLKOUT0=1600/32=50MHZ
+       .CLKOUT1_DIVIDE(64),     // CLKOUT1=1600/64=25MHZ
        .DIVCLK_DIVIDE(1),
        .STARTUP_WAIT("FALSE"))
    PLLE2_BASE_inst
      (.CLKOUT0(o_clk_core),
-      .CLKOUT1(),
+      .CLKOUT1(o_clk_vga),
       .CLKOUT2(),
       .CLKOUT3(),
       .CLKOUT4(),

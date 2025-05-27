@@ -23,6 +23,7 @@ module swervolf_core
   #(parameter bootrom_file  = "",
     parameter clk_freq_hz = 0)
    (input wire 	clk,
+    input wire  clk_vga,
     input wire 	       rstn,
     input wire 	       dmi_reg_en,
     input wire [6:0]   dmi_reg_addr,
@@ -83,6 +84,9 @@ module swervolf_core
     output wire        o_accel_sclk,
     output wire        o_accel_cs_n,
     output wire        o_accel_mosi,
+    output wire        hsync_o,
+    output wire        vsync_o,
+    output wire        video_on_o,
     input wire         i_accel_miso);
 
    localparam BOOTROM_SIZE = 32'h1000;
@@ -402,7 +406,25 @@ module swervolf_core
       .mosi_o (o_accel_mosi),
       .miso_i (i_accel_miso));
 
+    // VGA controller
+      wire video_on;
+      wire x;
+      wire y;
+      wire pixel_tick;
+      wire hsync;
+      wire vsync;
 
+      vga_top
+      vga_top_i(
+          .clk(clk_vga)
+          ,.rst(rstn)
+          ,.video_on_o(video_on)
+          ,.x_o(x)
+          ,.y_o(y)
+          ,.pixel_tick_o(pixel_tick)
+          ,.hsync_o(hsync)
+          ,.vsync_o(vsync)
+      );
 
    swerv_wrapper_dmi swerv_eh1
      (
