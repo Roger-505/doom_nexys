@@ -45,8 +45,8 @@ module vga_top(
                           (vcount_reg <  (V_DISPLAY + VB_PORCH + V_RETRACE)));
 
     // Register updates
-    always @(posedge clk or posedge rst) begin
-        if (rst) begin
+    always @(posedge clk or negedge rst) begin
+        if (!rst) begin
             hcount_reg <= 0;
             vcount_reg <= 0;
             hsync_reg  <= 1'b1;

@@ -173,6 +173,7 @@ int main(int argc, char **argv, char **env)
       done = true;
     }
     top->clk = !top->clk;
+
     main_time+=10;
   }
 

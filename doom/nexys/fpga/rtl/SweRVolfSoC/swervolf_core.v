@@ -84,9 +84,15 @@ module swervolf_core
     output wire        o_accel_sclk,
     output wire        o_accel_cs_n,
     output wire        o_accel_mosi,
-    output wire        hsync_o,
-    output wire        vsync_o,
-    output wire        video_on_o,
+    
+    // VGA signals 
+    output wire video_on_o,
+    output wire [9:0] x_o,
+    output wire [9:0] y_o,
+    output wire pixel_tick_o,
+    output wire hsync_o,
+    output wire vsync_o,
+
     input wire         i_accel_miso);
 
    localparam BOOTROM_SIZE = 32'h1000;
@@ -408,8 +414,8 @@ module swervolf_core
 
     // VGA controller
       wire video_on;
-      wire x;
-      wire y;
+      wire [9:0] x;
+      wire [9:0] y;
       wire pixel_tick;
       wire hsync;
       wire vsync;
@@ -425,6 +431,13 @@ module swervolf_core
           ,.hsync_o(hsync)
           ,.vsync_o(vsync)
       );
+
+      assign video_on_o = video_on;
+      assign x_o = x;
+      assign y_o = y;
+      assign pixel_tick_o = pixel_tick;
+      assign hsync_o = hsync;
+      assign vsync_o = vsync;
 
    swerv_wrapper_dmi swerv_eh1
      (

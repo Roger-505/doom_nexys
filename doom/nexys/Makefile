@@ -41,6 +41,7 @@ F_BIT_DIR	:= $(FPGA_DIR)/bitstreams
 F_XDC_DIR	:= $(FPGA_DIR)/constraints
 F_RTL_DIR	:= $(FPGA_DIR)/rtl
 F_PRJ_DIR	:= $(FPGA_DIR)/vivado
+F_VERILATOR := $(FPGA_DIR)/verilatorSIM
 
 # === Scripts subdirectories ===
 OPENOCD_DIR := $(SCRIPTS_DIR)/openocd
@@ -86,6 +87,8 @@ F_RTL := $(wildcard $(F_RTL_DIR)/**/*.v) \
          $(wildcard $(F_RTL_DIR)/**/*.vh) \
          $(wildcard $(F_RTL_DIR)/**/*.sv)
 F_TCL := $(F_PRJ_DIR)/vivado.tcl
+V_TB  := $(F_VERILATOR)/tb.cpp
+V_VC  := $(F_VERILATOR)/verilator.vc
 
 # === WAD file ===
 WAD	:= $(DATA_DIR)/$(DATA).wad

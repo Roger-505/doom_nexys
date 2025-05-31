@@ -33,7 +33,12 @@ module rvfpgasim
    input wire  i_jtag_trst_n,
    output wire o_jtag_tdo,
    output wire o_uart_tx,
-   output wire o_gpio
+   output wire o_gpio,
+
+   // VGA signals
+   output wire [11:0] rgb,
+   output wire hsync,
+   output wire vsync
    )
 `endif
   ;
@@ -42,8 +47,10 @@ module rvfpgasim
 
 `ifndef VERILATOR
    reg 	 clk = 1'b0;
+   reg   clk_vga = 1'b0;
    reg 	 rst = 1'b1;
    always #10 clk <= !clk;
+   always #20 clk_vga <= !clk_vga;
    initial #100 rst <= 1'b0;
    wire  o_gpio;
    wire i_jtag_tck = 1'b0;
@@ -56,6 +63,14 @@ module rvfpgasim
 //   uart_decoder #(115200) uart_decoder (o_uart_tx);
 
 `endif
+
+   wire clk_vga;
+   reg divider;
+    
+   always @(posedge clk)
+       divider = divider + 1;
+
+   assign clk_vga = divider;
 
    reg [1023:0] ram_init_file;
    initial begin
@@ -187,6 +202,22 @@ module rvfpgasim
       .reg_wr_en      (dmi_reg_wr_en),
       .dmi_hard_reset (dmi_hard_reset)); 
 
+
+      // VGA test
+      // Testing displaying switches color
+      // represented as 12 bit RGB444 on VGA display
+      reg [11:0] rgb_reg;
+      wire video_on;
+      wire [9:0] x;
+      wire [9:0] y;
+      wire pixel_tick;
+
+      always @(posedge clk) begin
+            rgb_reg <= i_sw[11:0];
+      end
+
+      assign rgb = (video_on) ? rgb_reg : 12'b0;
+
    swervolf_core
      #(.bootrom_file (bootrom_file))
    swervolf
@@ -245,6 +276,15 @@ module rvfpgasim
       .o_ram_rready        (ram_rready),
       .i_ram_init_done     (1'b1),
       .i_ram_init_error    (1'b0),
-      .io_data             ({i_sw,16'bz}));
+      .io_data             ({i_sw,16'bz}),
+       
+       // VGA signals
+      .clk_vga        (clk_vga),
+      .video_on_o     (video_on),
+      .x_o            (x),
+      .y_o            (y),
+      .pixel_tick_o   (pixel_tick),
+      .hsync_o        (hsync),
+      .vsync_o        (vsync));
 
 endmodule

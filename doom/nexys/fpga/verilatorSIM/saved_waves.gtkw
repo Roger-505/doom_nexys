@@ -1,0 +1,44 @@
+[*]
+[*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
+[*] Sat May 31 17:25:34 2025
+[*]
+[dumpfile] "/home/roger/Documentos/2025/I/ie0424/proyectoFinal/doom_nexys/doom/nexys/fpga/verilatorSIM/trace.vcd"
+[dumpfile_mtime] "Sat May 31 17:19:53 2025"
+[dumpfile_size] 1252810632
+[savefile] "/home/roger/Documentos/2025/I/ie0424/proyectoFinal/doom_nexys/doom/nexys/fpga/verilatorSIM/saved_waves.gtkw"
+[timestart] 4527800
+[size] 1920 1050
+[pos] -880 -16
+*-16.000000 26309 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[treeopen] TOP.
+[treeopen] TOP.rvfpgasim.
+[treeopen] TOP.rvfpgasim.swervolf.
+[sst_width] 222
+[signals_width] 209
+[sst_expanded] 1
+[sst_vpaned_height] 439
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.clk
+@24
+TOP.rvfpgasim.swervolf.vga_top_i.hcount_next[9:0]
+TOP.rvfpgasim.swervolf.vga_top_i.hcount_reg[9:0]
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.hsync_next
+TOP.rvfpgasim.swervolf.vga_top_i.hsync_reg
+TOP.rvfpgasim.swervolf.vga_top_i.pixel_tick_o
+TOP.rvfpgasim.swervolf.vga_top_i.rst
+@24
+TOP.rvfpgasim.swervolf.vga_top_i.vcount_next[9:0]
+@420
+TOP.rvfpgasim.swervolf.vga_top_i.vcount_reg[9:0]
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.video_on_o
+TOP.rvfpgasim.swervolf.vga_top_i.vsync_next
+TOP.rvfpgasim.swervolf.vga_top_i.vsync_o
+TOP.rvfpgasim.swervolf.vga_top_i.vsync_reg
+@24
+TOP.rvfpgasim.swervolf.vga_top_i.x_o[9:0]
+@25
+TOP.rvfpgasim.swervolf.vga_top_i.y_o[9:0]
+[pattern_trace] 1
+[pattern_trace] 0
