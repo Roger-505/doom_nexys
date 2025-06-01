@@ -12,8 +12,11 @@ CC       := $(CROSS)gcc
 OBJCOPY  := $(CROSS)objcopy
 DB		 := $(CROSS)gdb
 SIZE     := $(CROSS)size
-NEXYS_PROG := openocd
-
+WAVE_VIEWER := gtkwave
+NEXYS_PROG	:= openocd
+PYTHON		:= python3
+UBOOT_MK	:= mkimage
+VIVADO		:= vivado
 ############################
 # === Base Directories === #
 ############################
@@ -49,7 +52,8 @@ UTILS_DIR	:= $(SCRIPTS_DIR)/utils
 
 # === Create build dir === 
 $(BUILD_DIR):
-	mkdir -p $@
+	@echo " MKDIR    $(BUILD_DIR)"
+	$(Q)mkdir -p $@
 
 #################
 # === Files === #
@@ -93,9 +97,23 @@ V_VC  := $(F_VERILATOR)/verilator.vc
 # === WAD file ===
 WAD	:= $(DATA_DIR)/$(DATA).wad
 
-#########################
-# === Include recipes ===
-#########################
+###########################
+# ===    Verbosity    === #
+###########################
+VERBOSE ?= 0
+ifeq ($(VERBOSE),1)
+Q :=
+ECHO := @true
+REDIRECT :=
+else
+Q := @
+ECHO := @echo
+REDIRECT := > /dev/null 2>&1
+endif
+
+###########################
+# === Include recipes === #
+###########################
 MK_FILES := $(wildcard $(MK_DIR)/*.mk)
 
 include $(MK_FILES)

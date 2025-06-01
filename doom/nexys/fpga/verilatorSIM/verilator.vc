@@ -1,29 +1,33 @@
---Mdir .
+--Mdir ./build
 --cc
 
 
+# Verilog includes
+
 +incdir+./fpga/rtl/SweRVolfSoC/SweRVEh1CoreComplex/include
--CFLAGS -I./fpga/rtl/SweRVolfSoC/SweRVEh1CoreComplex/include
 +incdir+./fpga/rtl/OtherSources/jtag_vpi_0-r5/
--CFLAGS -I./fpga/rtl/OtherSources/jtag_vpi_0-r5/
 +incdir+./fpga/rtl/SweRVolfSoC/Interconnect/AxiInterconnect/pulp-platform.org__axi_0.25.0/include
--CFLAGS -I./fpga/rtl/SweRVolfSoC/Interconnect/AxiInterconnect/pulp-platform.org__axi_0.25.0/include
 +incdir+./fpga/rtl/OtherSources/pulp-platform.org__common_cells_1.20.0/include
--CFLAGS -I./fpga/rtl/OtherSources/pulp-platform.org__common_cells_1.20.0/include
 +incdir+./fpga/rtl/SweRVolfSoC/Peripherals/uart
--CFLAGS -I./fpga/rtl/SweRVolfSoC/Peripherals/uart
 +incdir+./fpga/rtl/SweRVolfSoC/Peripherals/spi
--CFLAGS -I./fpga/rtl/SweRVolfSoC/Peripherals/spi
 +incdir+./fpga/rtl/SweRVolfSoC/Peripherals/ptc
--CFLAGS -I./fpga/rtl/SweRVolfSoC/Peripherals/ptc
 +incdir+./fpga/rtl/SweRVolfSoC/Peripherals/gpio
--CFLAGS -I./fpga/rtl/SweRVolfSoC/Peripherals/gpio
 +incdir+./fpga/rtl/SweRVolfSoC/Interconnect/WishboneInterconnect/wb_common_1.0.3
--CFLAGS -I./fpga/rtl/SweRVolfSoC/Interconnect/WishboneInterconnect/wb_common_1.0.3
 +incdir+./fpga/rtl/SweRVolfSoC/Interconnect/WishboneInterconnect
--CFLAGS -I./fpga/rtl/SweRVolfSoC/Interconnect/WishboneInterconnect
 +incdir+./fpga/rtl/SweRVolfSoC/Interconnect/AxiInterconnect
--CFLAGS -I./fpga/rtl/SweRVolfSoC/Interconnect/AxiInterconnect
+
+# C++ includes
+-CFLAGS -I./../fpga/rtl/SweRVolfSoC/SweRVEh1CoreComplex/include
+-CFLAGS -I./../fpga/rtl/OtherSources/jtag_vpi_0-r5/
+-CFLAGS -I./../fpga/rtl/SweRVolfSoC/Interconnect/AxiInterconnect/pulp-platform.org__axi_0.25.0/include
+-CFLAGS -I./../fpga/rtl/OtherSources/pulp-platform.org__common_cells_1.20.0/include
+-CFLAGS -I./../fpga/rtl/SweRVolfSoC/Peripherals/uart
+-CFLAGS -I./../fpga/rtl/SweRVolfSoC/Peripherals/spi
+-CFLAGS -I./../fpga/rtl/SweRVolfSoC/Peripherals/ptc
+-CFLAGS -I./../fpga/rtl/SweRVolfSoC/Peripherals/gpio
+-CFLAGS -I./../fpga/rtl/SweRVolfSoC/Interconnect/WishboneInterconnect/wb_common_1.0.3
+-CFLAGS -I./../fpga/rtl/SweRVolfSoC/Interconnect/WishboneInterconnect
+-CFLAGS -I./../fpga/rtl/SweRVolfSoC/Interconnect/AxiInterconnect
 
 ./fpga/rtl/SweRVolfSoC/SweRVEh1CoreComplex/include/common_defines.vh
 ./fpga/rtl/SweRVolfSoC/Interconnect/WishboneInterconnect/cdc_utils_0.1-r1/sync2_pgen.v
@@ -201,9 +205,10 @@
 --top-module rvfpgasim
 --exe
 
-./build/../fpga/rtl/OtherSources/jtag_vpi_0-r5/jtag_common.c
-./build/../fpga/rtl/OtherSources/jtag_vpi_0-r5/jtagServer.cpp
-./build/../fpga/rtl/verilatorSIM/tb.cpp
+
+./../fpga/rtl/OtherSources/jtag_vpi_0-r5/jtag_common.c
+./../fpga/rtl/OtherSources/jtag_vpi_0-r5/jtagServer.cpp
+./../fpga/verilatorSIM/tb.cpp
 
 -DSIMPRINT=1
 -DVERSION_MAJOR=0

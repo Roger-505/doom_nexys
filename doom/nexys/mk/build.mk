@@ -11,7 +11,8 @@ gen_bin: $(BIN)
 
 # === WAD build === 
 $(WADO): $(WAD) | $(BUILD_DIR)
-	$(OBJCOPY) \
+	$(ECHO) " OBJCOPY  $(notdir $<) -> $(notdir $@)"
+	$(Q)$(OBJCOPY) \
 		--input binary \
 		--output elf32-littleriscv \
 		--binary-architecture riscv \
@@ -20,10 +21,11 @@ $(WADO): $(WAD) | $(BUILD_DIR)
 
 # === ELF build ===
 $(ELF): $(WADO) | $(BUILD_DIR)
-	$(CC) $(CFLAGS) -Wl,-Bstatic,-T,$(LD) -o $@ \
+	$(ECHO) " CC       $(COMMON_DIR)/*.c $(SRC_DIR)/*.c"
+	$(Q)$(CC) $(CFLAGS) -Wl,-Bstatic,-T,$(LD) -o $@ \
 		$(addprefix $(COMMON_DIR)/,$(SRC_doom)) $(SRC) $(WADO)
-	$(SIZE) $@
 
 # === BIN build ===
 $(BIN): $(ELF)
-	$(OBJCOPY) -O binary $< $@
+	$(ECHO) " OBJCOPY  $< -> $@"
+	$(Q)$(OBJCOPY) -O binary $< $@

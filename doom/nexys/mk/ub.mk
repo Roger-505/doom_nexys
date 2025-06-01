@@ -6,12 +6,13 @@ gen_ub: $(UB)
 
 # === Build U-boot image === # 
 $(UB): $(BIN) | $(BIN_DIR)
-	mkimage \
-		-A riscv \
-		-C none \
-		-T standalone \
-		-a 0x0 \
-		-e $(RESET_VECTOR) \
-		-n '$(@F)' \
-		-d $< \
-		$@
+	$(ECHO) " MKIMAGE  $(notdir $(@))"
+	$(Q)$(UBOOT_MK)\
+	 -A riscv \
+	 -C none \
+	 -T standalone \
+	 -a 0x0 \
+	 -e $(RESET_VECTOR) \
+	 -n '$(@F)' \
+	 -d $< \
+	 $@ $(REDIRECT)

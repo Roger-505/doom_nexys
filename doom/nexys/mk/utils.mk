@@ -1,6 +1,9 @@
 # === Execute targets for each bash script === 
 sd: $(BIT)
-	BITSTREAM=$< bash $(UTILS_DIR)/sd.sh
+	$(ECHO) " SD       $(notdir $(BIT))"
+	BITSTREAM=$< $(Q)bash $(UTILS_DIR)/sd.sh
 
 serial:
-	bash $(UTILS_DIR)/serial.sh
+	$(ECHO) " SERIAL   115200_8N1N /dev/ttyUSB1"
+	$(Q)sleep 3
+	$(Q)bash $(UTILS_DIR)/serial.sh

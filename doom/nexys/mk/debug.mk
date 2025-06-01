@@ -1,13 +1,15 @@
 PROXY_BIT := $(F_BIT_DIR)/bscan_spi_xc7a100t.bit
 
-flash: $(UB) $(PROXY_BIT)
-	openocd -c "set BINFILE $(UB); \
-		    	set PROXY_BIT $(PROXY_BIT)" \
-			-f $(OPENOCD_DIR)/flash.cfg
+flash: $(UB)
+	$(ECHO) " FLASH    $(notdir $<)"
+	$(Q)$(NEXYS_PROG) -c "set BINFILE $(UB); \
+		set PROXY_BIT $(PROXY_BIT)" -f $(OPENOCD_DIR)/flash.cfg $(REDIRECT)
 
 program: $(BIT)
-	openocd -c "set BITFILE $<" -f $(OPENOCD_DIR)/program.cfg
+	$(ECHO) " LOAD     $(notdir $<)"
+	$(Q)$(NEXYS_PROG) -c "set BITFILE $<" -f $(OPENOCD_DIR)/program.cfg $(REDIRECT)
 
 debug:
+	$(ECHO) " DEBUG"
 	st -e $(DB) -x .gdbinit $(ELF) &
-	openocd -f $(OPENOCD_DIR)/debug.cfg
+	$(Q)$(NEXYS_PROG) -f $(OPENOCD_DIR)/debug.cfg $(REDIRECT)
