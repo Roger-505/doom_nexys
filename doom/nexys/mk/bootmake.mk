@@ -3,7 +3,7 @@ gen_rom: $(B_MEM)
 
 $(B_ELF): $(B_SRC) | $(BUILD_DIR)
 	$(ECHO) " CC       $(B_SRC_DIR)/*.S"
-	$(Q)$(CC) -nostartfiles -march=rv32im -mabi=ilp32 -T$(B_LD) -o $@ $^
+	$(Q)$(CC) -nostartfiles -march=rv32im_zicsr -mabi=ilp32 -T$(B_LD) -o $@ $^
 
 $(B_BIN): $(B_ELF)
 	$(ECHO) " OBJCOPY  $(notdir $<) -> $(notdir $@)"
