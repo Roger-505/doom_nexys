@@ -5,7 +5,8 @@ SRC_doom := $(filter-out d_main.c s_sound.c, $(SRC_doom))
 # === Flags ===
 CFLAGS := -Wall -O3 -march=rv32im_zicsr -mabi=ilp32 -ffreestanding -flto -nostartfiles \
           -fomit-frame-pointer -Wl,--gc-section --specs=nano.specs \
-          -I$(COMMON_DIR) -I$(INC_DIR) -DNORMALUNIX -g -ffast-math
+          -I$(COMMON_DIR) -I$(INC_DIR) -DNORMALUNIX -g -std=gnu99
+
 
 gen_bin: $(BIN)
 
