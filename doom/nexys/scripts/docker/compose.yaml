@@ -1,0 +1,35 @@
+services:
+  doom_app:
+    build:
+      context: ./
+      dockerfile: ./app/Dockerfile
+    container_name: "doom_container"
+    # command: bash -ic "
+    #      /home/vivadouser/Vivado/2024.1/bin/vivado;"
+    command: bash -ic "
+      echo 'export CLICOLOR=1' >> ~/.bashrc && \
+      echo 'alias ls=\"ls --color=auto\"' >> ~/.bashrc && \
+      echo 'export PS1=\"\\[\\033[01;32m\\]\\u@\\h \\[\\033[01;34m\\]\\w \\$ \\[\\033[00m\\]\"' >> ~/.bashrc && \
+      source ~/.bashrc && \
+      bash"
+    stdin_open: true
+    tty: true
+    environment:
+      - DISPLAY:${DISPLAY}
+      - XAUTHORITY=${XAUTHORITY}
+      - _JAVA_AWT_WM_NONREPARENTING=1
+      - TERM=xterm-256color
+    volumes:
+       - ./data:/home/vivadouser/data:rw
+       - /tmp/.X11-unix:/tmp/.X11-unix
+       - code_volume:/home/vivadouser/.vscode:rw
+       - platformio_volume:/home/vivadouser/.platformio:rw
+    network_mode: "host"
+    privileged: true
+    devices:
+       - /dev/ttyUSB0:/dev/ttyUSB0
+       - /dev/ttyUSB1:/dev/ttyUSB1
+       - /dev/bus/usb:/dev/bus/usb
+volumes:
+    code_volume:
+    platformio_volume:
