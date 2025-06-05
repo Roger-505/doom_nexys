@@ -1,13 +1,15 @@
-module vga_top(
-    input clk,          // 25 MHz
-    input rst,
+`default_nettype none
 
-    output video_on_o,
-    output [9:0] x_o,
-    output [9:0] y_o,
-    output pixel_tick_o,
-    output hsync_o,
-    output vsync_o
+module vga_top(
+    input wire clk,          // 25 MHz
+    input wire rst,
+
+    output wire video_on_o,
+    output wire [9:0] x_o,
+    output wire [9:0] y_o,
+    output wire pixel_tick_o,
+    output wire hsync_o,
+    output wire vsync_o
 );
 
     // VGA 640x480 @60Hz timing parameters (25MHz pixel clock)

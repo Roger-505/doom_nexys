@@ -17,6 +17,7 @@ NEXYS_PROG	:= openocd
 PYTHON		:= python3
 UBOOT_MK	:= mkimage
 VIVADO		:= vivado
+
 ############################
 # === Base Directories === #
 ############################
