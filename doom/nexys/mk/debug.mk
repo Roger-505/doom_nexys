@@ -2,7 +2,7 @@ PROXY_BIT := $(F_BIT_DIR)/bscan_spi_xc7a100t.bit
 
 flash: $(UB)
 	$(ECHO) " FLASH    $(notdir $<)"
-	$(Q)$(NEXYS_PROG) -c "set BINFILE $(UB); \
+	$(Q)$(NEXYS_PROG) -d4 -c "set BINFILE $(UB); \
 		set PROXY_BIT $(PROXY_BIT)" -f $(OPENOCD_DIR)/flash.cfg $(REDIRECT)
 
 program: $(BIT)
