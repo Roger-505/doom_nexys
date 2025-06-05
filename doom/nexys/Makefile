@@ -17,6 +17,12 @@ NEXYS_PROG	:= openocd
 PYTHON		:= python3
 UBOOT_MK	:= mkimage
 VIVADO		:= vivado
+DOCKER		:= docker compose
+DOCKER_IMG  := docker image
+DOCKER_VOL	:= docker volume
+DOCKER_CONT := docker container
+SHELL		:= bash
+VCODE		:= code
 
 ############################
 # === Base Directories === #
@@ -111,6 +117,19 @@ Q := @
 ECHO := @echo
 REDIRECT := > /dev/null 2>&1
 endif
+
+###########################
+# ===     Docker      === #
+###########################
+APP 		:= doom_app
+CONTAINER	:= doom_container
+
+# === Directories === 
+DOCKER_DIR	:= $(SCRIPTS_DIR)/docker
+
+# === Volumes ===
+CODE_VOL := code_volume
+PLAT_VOL := platformio_volume
 
 ###########################
 # === Include recipes === #
