@@ -40,6 +40,11 @@ B_LD_DIR	  := $(BOOT_DIR)/linker
 B_SCRIPTS_DIR := $(BOOT_DIR)/scripts
 B_SRC_DIR	  := $(BOOT_DIR)/src
 
+# === Boot subdirectories ===
+B_SIM_DIR	  := $(FPGA_DIR)/sim/ram
+B_LD_S_DIR	  := $(B_SIM_DIR)/linker
+B_SRC_S_DIR	  := $(B_SIM_DIR)/src
+
 # === Firmware subdirectories ===
 SRC_DIR	 := $(FIRMWARE_DIR)/src
 INC_DIR	 := $(FIRMWARE_DIR)/include
@@ -81,10 +86,22 @@ B_VHD := $(BUILD_DIR)/$(BOOT_TARGET).vh
 B_DIS := $(BUILD_DIR)/$(BOOT_TARGET).dis
 B_HEX := $(BUILD_DIR)/$(BOOT_TARGET).hex
 
+# === Bootrom sim outputs ===
+B_MEM_S := $(BUILD_DIR)/$(BOOT_TARGET)_sim.mem
+B_ELF_S := $(BUILD_DIR)/$(BOOT_TARGET)_sim.elf
+B_BIN_S := $(BUILD_DIR)/$(BOOT_TARGET)_sim.bin
+B_VHD_S := $(BUILD_DIR)/$(BOOT_TARGET)_sim.vh
+B_DIS_S := $(BUILD_DIR)/$(BOOT_TARGET)_sim.dis
+B_HEX_S := $(BUILD_DIR)/$(BOOT_TARGET)_sim.hex
+
 # === Boot files === 
 B_LD 	 := $(B_LD_DIR)/$(TARGET)_boot.lds
 B_SRC    := $(wildcard $(B_SRC_DIR)/*.S)
 B_SCRIPT := $(UTILS_DIR)/makehex.py
+
+# === Boot sim files ===
+B_LD_S 	 := $(B_LD_S_DIR)/$(TARGET)_boot.lds
+B_SRC_S  := $(wildcard $(B_SRC_S_DIR)/*.S)
 
 # === Firmware files ===
 INC := $(wildcard $(INC_DIR)/*.h)

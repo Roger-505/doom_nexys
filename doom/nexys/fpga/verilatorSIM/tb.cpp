@@ -123,6 +123,9 @@ int main(int argc, char **argv, char **env)
     }    
   }
 
+  const char *arg_ram = Verilated::commandArgsPlusMatch("ram_init_file=");
+  // printf("Loading program %s into RAM", arg_ram);
+
   uart_context_t uart_context;
   int baud_rate = 115200;
   uart_init(&uart_context, baud_rate);

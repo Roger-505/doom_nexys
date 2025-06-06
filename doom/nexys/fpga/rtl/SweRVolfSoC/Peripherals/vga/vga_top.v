@@ -1,6 +1,10 @@
 `default_nettype none
 
-module vga_top(
+module vga_top#(
+    parameter H_DISPLAY = 300,
+    parameter V_DISPLAY = 200,
+    parameter memfile = ""
+)(
     input wire clk,          // 25 MHz
     input wire rst,
 
@@ -9,64 +13,72 @@ module vga_top(
     output wire [9:0] y_o,
     output wire pixel_tick_o,
     output wire hsync_o,
-    output wire vsync_o
+    output wire vsync_o,
+
+    // Wishbone bus
+    input  wire [31:0]  wb_adr_i,
+    input  wire [31:0]  wb_dat_i,
+    input  wire [3:0]   wb_sel_i,
+    input  wire         wb_we_i,
+    input  wire         wb_cyc_i,
+    input  wire         wb_stb_i,
+    input  wire [2:0]   wb_cti_i,
+    input  wire [1:0]   wb_bte_i,
+    output reg [31:0] wb_dat_o,
+    output reg          wb_ack_o,
+    output reg          wb_err_o,
+    output reg          wb_rty_o
 );
 
-    // VGA 640x480 @60Hz timing parameters (25MHz pixel clock)
-    parameter H_DISPLAY  = 640;
-    parameter HF_PORCH   = 48;
-    parameter H_RETRACE  = 96;
-    parameter HB_PORCH   = 16;
-    parameter H_MAX      = H_DISPLAY + HF_PORCH + H_RETRACE + HB_PORCH - 1;
+    /* ------------------------- START TIMING -------------------------- */ 
+    vga_tg 
+    vga_tg_i (
+        .clk(clk),
+        .rst(rst),
+        .video_on_o(video_on_o),
+        .x_o(x_o),
+        .y_o(y_o),
+        .pixel_tick_o(pixel_tick_o),
+        .hsync_o(hsync_o),
+        .vsync_o(vsync_o)
+    );
+    /* ------------------------- END TIMING ------------------------------ */ 
 
-    parameter V_DISPLAY  = 480;
-    parameter VF_PORCH   = 10;
-    parameter V_RETRACE  = 2;
-    parameter VB_PORCH   = 33;
-    parameter V_MAX      = V_DISPLAY + VF_PORCH + V_RETRACE + VB_PORCH - 1;
+    /* ---------------------- START WISHBONE ----------------------------- */ 
+    localparam FRAMEBUFFER_SIZE_BYTES = H_DISPLAY * V_DISPLAY; // 64000 bytes
+    localparam RAM_DEPTH_WORDS = FRAMEBUFFER_SIZE_BYTES / 4;   // 16000 words
+    localparam ADDR_WIDTH = $clog2(RAM_DEPTH_WORDS);           // ~17 bits (17 bits to address 76,800 words)
 
-    // Registers
-    reg [9:0] hcount_reg, vcount_reg;
-    wire [9:0] hcount_next, vcount_next;
-    reg hsync_reg, vsync_reg;
-    wire hsync_next, vsync_next;
+    wb_ram #(
+        .dw(32),
+        .depth(FRAMEBUFFER_SIZE_BYTES),
+        .memfile(memfile)
+    ) wb_ram_i (
+        .wb_clk_i(clk),
+        .wb_rst_i(rst),
 
-    // Horizontal counter
-    assign hcount_next = (hcount_reg == H_MAX) ? 0 : hcount_reg + 1;
+        // Addressing notes:
+        // wb_adr_i is byte address from CPU (32 bits)
+        // RAM word address = wb_adr_i[ADDR_WIDTH+1:2]
+        // - bits [1:0] = byte offset inside word
+        // - bits [ADDR_WIDTH+1:2] = word index
+        // So for ADDR_WIDTH=17, use bits [18:2]
 
-    // Vertical counter
-    assign vcount_next = (hcount_reg == H_MAX) ?
-                         ((vcount_reg == V_MAX) ? 0 : vcount_reg + 1) :
-                         vcount_reg;
+        .wb_adr_i(wb_adr_i[ADDR_WIDTH+1:2]),
 
-    // Sync pulse generation (active low)
-    assign hsync_next = ~((hcount_reg >= (H_DISPLAY + HB_PORCH)) &&
-                          (hcount_reg <  (H_DISPLAY + HB_PORCH + H_RETRACE)));
+        .wb_dat_i(wb_dat_i),
+        .wb_sel_i(wb_sel_i),
+        .wb_we_i(wb_we_i),
+        .wb_bte_i(wb_bte_i),
+        .wb_cti_i(wb_cti_i),
+        .wb_cyc_i(wb_cyc_i),
+        .wb_stb_i(wb_stb_i),
 
-    assign vsync_next = ~((vcount_reg >= (V_DISPLAY + VB_PORCH)) &&
-                          (vcount_reg <  (V_DISPLAY + VB_PORCH + V_RETRACE)));
+        .wb_ack_o(wb_ack_o),
+        .wb_err_o(wb_err_o),
+        .wb_dat_o(wb_dat_o)
+    );
 
-    // Register updates
-    always @(posedge clk or negedge rst) begin
-        if (!rst) begin
-            hcount_reg <= 0;
-            vcount_reg <= 0;
-            hsync_reg  <= 1'b1;
-            vsync_reg  <= 1'b1;
-        end else begin
-            hcount_reg <= hcount_next;
-            vcount_reg <= vcount_next;
-            hsync_reg  <= hsync_next;
-            vsync_reg  <= vsync_next;
-        end
-    end
-
-    // Outputs
-    assign video_on_o = (hcount_reg < H_DISPLAY) && (vcount_reg < V_DISPLAY);
-    assign x_o = hcount_reg;
-    assign y_o = vcount_reg;
-    assign hsync_o = hsync_reg;
-    assign vsync_o = vsync_reg;
-    assign pixel_tick_o = clk;
-
+    assign wb_rty_o = 1'b0;  // if retry not used
+    /* ---------------------- END WISHBONE ------------------------------- */ 
 endmodule

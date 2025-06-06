@@ -13,3 +13,7 @@ debug:
 	$(ECHO) " DEBUG"
 	st -e $(DB) -x .gdbinit $(ELF) &
 	$(Q)$(NEXYS_PROG) -f $(OPENOCD_DIR)/debug.cfg $(REDIRECT)
+
+debug_verilator:
+	$(ECHO) " DEBUG"
+	st -e $(DB) -x .gdbinit $(ELF) &

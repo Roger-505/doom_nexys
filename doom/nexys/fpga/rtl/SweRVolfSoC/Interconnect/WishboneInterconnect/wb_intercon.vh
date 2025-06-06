@@ -101,6 +101,20 @@ wire        wb_s2m_spi_accel_ack;
 wire        wb_s2m_spi_accel_err;
 wire        wb_s2m_spi_accel_rty;
 
+// VGA
+wire [31:0] wb_m2s_vga_adr;
+wire [31:0] wb_m2s_vga_dat;
+wire  [3:0] wb_m2s_vga_sel;
+wire        wb_m2s_vga_we;
+wire        wb_m2s_vga_cyc;
+wire        wb_m2s_vga_stb;
+wire  [2:0] wb_m2s_vga_cti;
+wire  [1:0] wb_m2s_vga_bte;
+wire [31:0] wb_s2m_vga_dat;
+wire        wb_s2m_vga_ack;
+wire        wb_s2m_vga_err;
+wire        wb_s2m_vga_rty;
+
 wb_intercon wb_intercon0
    (.wb_clk_i           (wb_clk),
     .wb_rst_i           (wb_rst),
@@ -202,4 +216,17 @@ wb_intercon wb_intercon0
     .wb_spi_accel_dat_i (wb_s2m_spi_accel_dat),
     .wb_spi_accel_ack_i (wb_s2m_spi_accel_ack),
     .wb_spi_accel_err_i (wb_s2m_spi_accel_err),
-    .wb_spi_accel_rty_i (wb_s2m_spi_accel_rty));
+    .wb_spi_accel_rty_i (wb_s2m_spi_accel_rty),
+// VGA
+    .wb_vga_adr_o(wb_m2s_vga_adr), 
+    .wb_vga_dat_o(wb_m2s_vga_dat), 
+    .wb_vga_sel_o(wb_m2s_vga_sel), 
+    .wb_vga_we_o (wb_m2s_vga_we ), 
+    .wb_vga_cyc_o(wb_m2s_vga_cyc), 
+    .wb_vga_stb_o(wb_m2s_vga_stb), 
+    .wb_vga_cti_o(wb_m2s_vga_cti), 
+    .wb_vga_bte_o(wb_m2s_vga_bte), 
+    .wb_vga_dat_i(wb_s2m_vga_dat), 
+    .wb_vga_ack_i(wb_s2m_vga_ack), 
+    .wb_vga_err_i(wb_s2m_vga_err), 
+    .wb_vga_rty_i(wb_s2m_vga_rty));

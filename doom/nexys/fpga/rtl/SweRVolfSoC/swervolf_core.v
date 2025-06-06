@@ -420,16 +420,41 @@ module swervolf_core
       wire hsync;
       wire vsync;
 
+    localparam H_DISPLAY = 320;
+    localparam V_DISPLAY = 200;
+
       vga_top
-      vga_top_i(
-          .clk(clk_vga)
-          ,.rst(rstn)
-          ,.video_on_o(video_on)
-          ,.x_o(x)
-          ,.y_o(y)
-          ,.pixel_tick_o(pixel_tick)
-          ,.hsync_o(hsync)
-          ,.vsync_o(vsync)
+      #(
+        .H_DISPLAY(H_DISPLAY),
+        .V_DISPLAY(V_DISPLAY),
+    `ifdef VERILATOR
+        .memfile("./fpga/rtl/SweRVolfSoC/Peripherals/vga/boot_display.mem")
+    `else
+        .memfile("boot_display.mem")
+    `endif
+      ) vga_top_i (
+          .clk              (clk_vga)
+          ,.rst             (rstn)
+          ,.video_on_o      (video_on)
+          ,.x_o             (x)
+          ,.y_o             (y)
+          ,.pixel_tick_o    (pixel_tick)
+          ,.hsync_o         (hsync)
+          ,.vsync_o         (vsync)
+
+          // Wishbone
+          ,.wb_adr_i        (wb_m2s_vga_adr)  
+          ,.wb_dat_i        (wb_m2s_vga_dat)  
+          ,.wb_sel_i        (wb_m2s_vga_sel)  
+          ,.wb_we_i         (wb_m2s_vga_we )  
+          ,.wb_cyc_i        (wb_m2s_vga_cyc)  
+          ,.wb_stb_i        (wb_m2s_vga_stb)  
+          ,.wb_cti_i        (wb_m2s_vga_cti)  
+          ,.wb_bte_i        (wb_m2s_vga_bte)  
+          ,.wb_dat_o        (wb_s2m_vga_dat)  
+          ,.wb_ack_o        (wb_s2m_vga_ack)  
+          ,.wb_err_o        (wb_s2m_vga_err)  
+          ,.wb_rty_o        (wb_s2m_vga_rty)  
       );
 
       assign video_on_o = video_on;
