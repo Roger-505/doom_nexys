@@ -124,8 +124,8 @@ WAD	:= $(DATA_DIR)/$(DATA).wad
 ###########################
 # ===    Verbosity    === #
 ###########################
-VERBOSE ?= 0
-ifeq ($(VERBOSE),1)
+V ?= 0
+ifeq ($(V),1)
 Q :=
 ECHO := @true
 REDIRECT :=

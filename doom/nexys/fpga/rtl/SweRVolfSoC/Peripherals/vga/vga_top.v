@@ -47,7 +47,6 @@ module vga_top#(
     /* ---------------------- START WISHBONE ----------------------------- */ 
     localparam FRAMEBUFFER_SIZE_BYTES = H_DISPLAY * V_DISPLAY; // 64000 bytes
     localparam RAM_DEPTH_WORDS = FRAMEBUFFER_SIZE_BYTES / 4;   // 16000 words
-    localparam ADDR_WIDTH = $clog2(RAM_DEPTH_WORDS);           // ~17 bits (17 bits to address 76,800 words)
 
     wb_ram #(
         .dw(32),
@@ -58,13 +57,11 @@ module vga_top#(
         .wb_rst_i(rst),
 
         // Addressing notes:
-        // wb_adr_i is byte address from CPU (32 bits)
-        // RAM word address = wb_adr_i[ADDR_WIDTH+1:2]
-        // - bits [1:0] = byte offset inside word
-        // - bits [ADDR_WIDTH+1:2] = word index
-        // So for ADDR_WIDTH=17, use bits [18:2]
+        // ...  
+        // Check this one out! Might give problems with higher addresses.. 
+        // Bit size might be wrong.
 
-        .wb_adr_i(wb_adr_i[ADDR_WIDTH+1:2]),
+        .wb_adr_i(wb_adr_i[$clog2(FRAMEBUFFER_SIZE_BYTES)-1:0]),
 
         .wb_dat_i(wb_dat_i),
         .wb_sel_i(wb_sel_i),

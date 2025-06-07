@@ -61,7 +61,7 @@ module wb_ram
       valid_r <= valid;
       //Ack generation
       wb_ack_o <= valid & (!((wb_cti_i == 3'b000) | (wb_cti_i == 3'b111)) | !wb_ack_o);
-      if(wb_rst_i) begin
+      if(!wb_rst_i) begin
 	 adr_r <= {aw{1'b0}};
 	 valid_r <= 1'b0;
 	 wb_ack_o <= 1'b0;

@@ -1,44 +1,89 @@
 [*]
 [*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
-[*] Sat May 31 17:25:34 2025
+[*] Sat Jun  7 22:12:35 2025
 [*]
-[dumpfile] "/home/roger/Documentos/2025/I/ie0424/proyectoFinal/doom_nexys/doom/nexys/fpga/verilatorSIM/trace.vcd"
-[dumpfile_mtime] "Sat May 31 17:19:53 2025"
-[dumpfile_size] 1252810632
-[savefile] "/home/roger/Documentos/2025/I/ie0424/proyectoFinal/doom_nexys/doom/nexys/fpga/verilatorSIM/saved_waves.gtkw"
-[timestart] 4527800
+[dumpfile] "/home/roger/Documentos/2025/I/ie0424/proyectoFinal/DOOM1/doom/nexys/build/trace.vcd"
+[dumpfile_mtime] "Sat Jun  7 22:11:27 2025"
+[dumpfile_size] 167664195
+[savefile] "/home/roger/Documentos/2025/I/ie0424/proyectoFinal/DOOM1/doom/nexys/fpga/verilatorSIM/saved_waves.gtkw"
+[timestart] 1326
 [size] 1920 1050
-[pos] -880 -16
-*-16.000000 26309 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-9.000000 1713 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.rvfpgasim.
 [treeopen] TOP.rvfpgasim.swervolf.
-[sst_width] 222
-[signals_width] 209
+[treeopen] TOP.rvfpgasim.swervolf.axi_intercon.
+[treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[28].
+[treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[29].
+[treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[30].
+[treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[31].
+[treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[4].gprff.
+[treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[5].
+[treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[6].gprff.
+[treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[7].gprff.
+[treeopen] TOP.rvfpgasim.swervolf.vga_top_i.
+[treeopen] TOP.rvfpgasim.swervolf.wb_intercon0.
+[sst_width] 429
+[signals_width] 268
 [sst_expanded] 1
-[sst_vpaned_height] 439
+[sst_vpaned_height] 342
+@200
+-VGA timing
 @28
 TOP.rvfpgasim.swervolf.vga_top_i.clk
-@24
-TOP.rvfpgasim.swervolf.vga_top_i.hcount_next[9:0]
-TOP.rvfpgasim.swervolf.vga_top_i.hcount_reg[9:0]
-@28
-TOP.rvfpgasim.swervolf.vga_top_i.hsync_next
-TOP.rvfpgasim.swervolf.vga_top_i.hsync_reg
 TOP.rvfpgasim.swervolf.vga_top_i.pixel_tick_o
 TOP.rvfpgasim.swervolf.vga_top_i.rst
-@24
-TOP.rvfpgasim.swervolf.vga_top_i.vcount_next[9:0]
-@420
-TOP.rvfpgasim.swervolf.vga_top_i.vcount_reg[9:0]
-@28
 TOP.rvfpgasim.swervolf.vga_top_i.video_on_o
-TOP.rvfpgasim.swervolf.vga_top_i.vsync_next
 TOP.rvfpgasim.swervolf.vga_top_i.vsync_o
-TOP.rvfpgasim.swervolf.vga_top_i.vsync_reg
 @24
 TOP.rvfpgasim.swervolf.vga_top_i.x_o[9:0]
-@25
 TOP.rvfpgasim.swervolf.vga_top_i.y_o[9:0]
+@200
+-VGA Wishbone
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_clk_i
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_rst_i
+@22
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_adr_i[15:0]
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_dat_i[31:0]
+@24
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_dat_o[31:0]
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_bte_i[1:0]
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_cti_i[2:0]
+@22
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_sel_i[3:0]
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_cyc_i
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_stb_i
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_ack_o
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_err_o
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_i.wb_we_i
+TOP.rvfpgasim.swervolf.wb_intercon0.wb_io_ack_o
+@22
+TOP.rvfpgasim.swervolf.wb_intercon0.wb_io_adr_i[31:0]
+@200
+-CPU regs and exu
+@22
+TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[5].gprff.dout[31:0]
+TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[6].gprff.dout[31:0]
+TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[7].gprff.dout[31:0]
+TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[4].gprff.dout[31:0]
+@23
+TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[28].gprff.dout[31:0]
+@22
+TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[29].gprff.dout[31:0]
+TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[30].gprff.dout[31:0]
+TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[31].gprff.dout[31:0]
+TOP.rvfpgasim.swervolf.swerv_eh1.swerv.ifu.ifu_i1_instr[31:0]
+TOP.rvfpgasim.swervolf.swerv_eh1.swerv.ifu.ifu_i0_instr[31:0]
+TOP.rvfpgasim.swervolf.swerv_eh1.lsu_axi_araddr[31:0]
+@28
+TOP.rvfpgasim.swervolf.swerv_eh1.lsu_axi_arvalid
+@22
+TOP.rvfpgasim.swervolf.axi_intercon.o_io_araddr[31:0]
+TOP.rvfpgasim.swervolf.axi2wb.o_wb_adr[19:2]
+TOP.rvfpgasim.swervolf.axi_intercon.o_io_araddr[31:0]
 [pattern_trace] 1
 [pattern_trace] 0

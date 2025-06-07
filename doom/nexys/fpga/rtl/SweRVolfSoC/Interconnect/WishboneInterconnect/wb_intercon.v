@@ -120,7 +120,7 @@ module wb_intercon
 
 wb_mux
   #(.num_slaves (8),
-    .MATCH_ADDR ({32'h00000000, 32'h00001000, 32'h00001040, 32'h00001100, 32'h00001200, 32'h00001400, 32'h00002000, 32'h00130000}),
+    .MATCH_ADDR ({32'h00000000, 32'h00001000, 32'h00001040, 32'h00001100, 32'h00001200, 32'h00001400, 32'h00002000, 32'h00010000}),
     .MATCH_MASK ({32'hfffff000, 32'hffffffc0, 32'hffffffc0, 32'hffffffc0, 32'hffffffc0, 32'hffffffc0, 32'hfffff000, 32'hffff0000}))
  wb_mux_io
    (.wb_clk_i  (wb_clk_i),

@@ -154,14 +154,16 @@ module swervolf_core
 
 `include "wb_intercon.vh"
 
-   wire [15:2] 		       wb_adr;
-
-   assign		       wb_m2s_io_adr = {16'd0,wb_adr,2'b00};
+   // wire [15:2] 		       wb_adr;
+   // assign		       wb_m2s_io_adr = {16'd0,wb_adr,2'b00};
    assign wb_m2s_io_cti = 3'b000;
    assign wb_m2s_io_bte = 2'b00;
 
+   wire [19:2] wb_adr;
+   assign wb_m2s_io_adr = {14'd0, wb_adr, 2'b00};
+
    axi2wb
-     #(.AW (16),
+     #(.AW (20),                // Increased to 17 to support Wishbone RAM
        .IW (`RV_LSU_BUS_TAG+2))
    axi2wb
      (
@@ -177,12 +179,12 @@ module swervolf_core
       .i_wb_ack    (wb_s2m_io_ack),
       .i_wb_err    (wb_s2m_io_err),
 
-      .i_awaddr    (io_awaddr[15:0]),
+      .i_awaddr    (io_awaddr[19:0]),
       .i_awid      (io_awid),
       .i_awvalid   (io_awvalid),
       .o_awready   (io_awready),
 
-      .i_araddr    (io_araddr[15:0]),
+      .i_araddr    (io_araddr[19:0]),
       .i_arid      (io_arid),
       .i_arvalid   (io_arvalid),
       .o_arready   (io_arready),
