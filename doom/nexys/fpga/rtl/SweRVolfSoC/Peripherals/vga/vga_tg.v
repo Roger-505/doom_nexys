@@ -8,7 +8,7 @@ module vga_tg(
     output wire [9:0] y_o,
     output wire pixel_tick_o,
     output wire hsync_o,
-    output wire vsync_o,
+    output wire vsync_o
 );
 
     /* ------------------------- START TIMING -------------------------- */ 

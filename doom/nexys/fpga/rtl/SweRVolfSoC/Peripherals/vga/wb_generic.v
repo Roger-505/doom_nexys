@@ -23,7 +23,14 @@ module wb_ram_generic
    input [31:0]  din,
    input [$clog2(depth)-1:0] 	 waddr,
    input [$clog2(depth)-1:0] 	 raddr,
-   output reg [31:0] dout);
+   output reg [31:0] dout,
+
+   // Dual port for VGA access.
+   input  wire        clk_vga,
+   input  wire        i_vga_rd,
+   input  wire [31:0] i_vga_rd_addr,
+   output reg  [31:0] vga_dout
+  );
 
    reg [31:0] 	 mem [0:depth-1] /* verilator public */;
 
@@ -34,6 +41,11 @@ module wb_ram_generic
       if (we[3]) mem[waddr][31:24] <= din[31:24];
       dout <= mem[raddr];
    end
+
+    always @(posedge clk_vga) begin
+        if (i_vga_rd)
+            vga_dout <= mem[i_vga_rd_addr];
+    end
 
    generate
       initial

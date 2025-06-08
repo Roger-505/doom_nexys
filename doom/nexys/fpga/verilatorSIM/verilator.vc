@@ -204,6 +204,7 @@
 ./fpga/rtl/SweRVolfSoC/Peripherals/vga/vga_tg.v
 ./fpga/rtl/SweRVolfSoC/Peripherals/vga/wb_ram.v
 ./fpga/rtl/SweRVolfSoC/Peripherals/vga/wb_generic.v
+./fpga/rtl/SweRVolfSoC/Peripherals/vga/vga_pcu.v
 
 --top-module rvfpgasim
 --exe

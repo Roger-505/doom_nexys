@@ -36,7 +36,14 @@ module wb_ram
 
    output reg 	   wb_ack_o,
    output 	   wb_err_o,
-   output [dw-1:0] wb_dat_o);
+   output [dw-1:0] wb_dat_o,
+   
+   // For VGA access
+   input  wire          clk_vga,
+   input  wire          i_vga_rd,
+   input  wire [aw-1:0] i_vga_rd_addr,
+   output wire [dw-1:0] vga_data_o
+  );
 
    `include "wb_common.v"
    reg [aw-1:0] 	   adr_r;
@@ -77,11 +84,16 @@ module wb_ram
      #(.depth(depth/4),
        .memfile (memfile))
    ram0
-     (.clk (wb_clk_i),
-      .we  ({4{ram_we}} & wb_sel_i),
-      .din (wb_dat_i),
-      .waddr(adr_r[aw-1:2]),
-      .raddr (adr[aw-1:2]),
-      .dout (wb_dat_o));
+     (.clk          (wb_clk_i),
+      .we           ({4{ram_we}} & wb_sel_i),
+      .din          (wb_dat_i),
+      .waddr        (adr_r[aw-1:2]),
+      .raddr        (adr[aw-1:2]),
+      .dout         (wb_dat_o),
+      .clk_vga      (clk_vga),
+      .i_vga_rd     (i_vga_rd),
+      .i_vga_rd_addr(i_vga_rd_addr),
+      .vga_dout     (vga_data_o)
+     );
 
 endmodule
