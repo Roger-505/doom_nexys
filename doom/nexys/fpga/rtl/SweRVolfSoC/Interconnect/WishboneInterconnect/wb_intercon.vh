@@ -101,19 +101,33 @@ wire        wb_s2m_spi_accel_ack;
 wire        wb_s2m_spi_accel_err;
 wire        wb_s2m_spi_accel_rty;
 
-// VGA
-wire [31:0] wb_m2s_vga_adr;
-wire [31:0] wb_m2s_vga_dat;
-wire  [3:0] wb_m2s_vga_sel;
-wire        wb_m2s_vga_we;
-wire        wb_m2s_vga_cyc;
-wire        wb_m2s_vga_stb;
-wire  [2:0] wb_m2s_vga_cti;
-wire  [1:0] wb_m2s_vga_bte;
-wire [31:0] wb_s2m_vga_dat;
-wire        wb_s2m_vga_ack;
-wire        wb_s2m_vga_err;
-wire        wb_s2m_vga_rty;
+// VGA framebuffer
+wire [31:0] wb_m2s_fb_adr;
+wire [31:0] wb_m2s_fb_dat;
+wire  [3:0] wb_m2s_fb_sel;
+wire        wb_m2s_fb_we;
+wire        wb_m2s_fb_cyc;
+wire        wb_m2s_fb_stb;
+wire  [2:0] wb_m2s_fb_cti;
+wire  [1:0] wb_m2s_fb_bte;
+wire [31:0] wb_s2m_fb_dat;
+wire        wb_s2m_fb_ack;
+wire        wb_s2m_fb_err;
+wire        wb_s2m_fb_rty;
+
+// VGA palette
+wire [31:0] wb_m2s_pal_adr;
+wire [31:0] wb_m2s_pal_dat;
+wire  [3:0] wb_m2s_pal_sel;
+wire        wb_m2s_pal_we;
+wire        wb_m2s_pal_cyc;
+wire        wb_m2s_pal_stb;
+wire  [2:0] wb_m2s_pal_cti;
+wire  [1:0] wb_m2s_pal_bte;
+wire [31:0] wb_s2m_pal_dat;
+wire        wb_s2m_pal_ack;
+wire        wb_s2m_pal_err;
+wire        wb_s2m_pal_rty;
 
 wb_intercon wb_intercon0
    (.wb_clk_i           (wb_clk),
@@ -217,16 +231,31 @@ wb_intercon wb_intercon0
     .wb_spi_accel_ack_i (wb_s2m_spi_accel_ack),
     .wb_spi_accel_err_i (wb_s2m_spi_accel_err),
     .wb_spi_accel_rty_i (wb_s2m_spi_accel_rty),
-// VGA
-    .wb_vga_adr_o(wb_m2s_vga_adr), 
-    .wb_vga_dat_o(wb_m2s_vga_dat), 
-    .wb_vga_sel_o(wb_m2s_vga_sel), 
-    .wb_vga_we_o (wb_m2s_vga_we ), 
-    .wb_vga_cyc_o(wb_m2s_vga_cyc), 
-    .wb_vga_stb_o(wb_m2s_vga_stb), 
-    .wb_vga_cti_o(wb_m2s_vga_cti), 
-    .wb_vga_bte_o(wb_m2s_vga_bte), 
-    .wb_vga_dat_i(wb_s2m_vga_dat), 
-    .wb_vga_ack_i(wb_s2m_vga_ack), 
-    .wb_vga_err_i(wb_s2m_vga_err), 
-    .wb_vga_rty_i(wb_s2m_vga_rty));
+// VGA framebuffer
+    .wb_fb_adr_o(wb_m2s_fb_adr), 
+    .wb_fb_dat_o(wb_m2s_fb_dat), 
+    .wb_fb_sel_o(wb_m2s_fb_sel), 
+    .wb_fb_we_o (wb_m2s_fb_we ), 
+    .wb_fb_cyc_o(wb_m2s_fb_cyc), 
+    .wb_fb_stb_o(wb_m2s_fb_stb), 
+    .wb_fb_cti_o(wb_m2s_fb_cti), 
+    .wb_fb_bte_o(wb_m2s_fb_bte), 
+    .wb_fb_dat_i(wb_s2m_fb_dat), 
+    .wb_fb_ack_i(wb_s2m_fb_ack), 
+    .wb_fb_err_i(wb_s2m_fb_err), 
+    .wb_fb_rty_i(wb_s2m_fb_rty),
+
+// VGA palette
+    .wb_pal_adr_o(wb_m2s_pal_adr), 
+    .wb_pal_dat_o(wb_m2s_pal_dat), 
+    .wb_pal_sel_o(wb_m2s_pal_sel), 
+    .wb_pal_we_o (wb_m2s_pal_we ), 
+    .wb_pal_cyc_o(wb_m2s_pal_cyc), 
+    .wb_pal_stb_o(wb_m2s_pal_stb), 
+    .wb_pal_cti_o(wb_m2s_pal_cti), 
+    .wb_pal_bte_o(wb_m2s_pal_bte), 
+    .wb_pal_dat_i(wb_s2m_pal_dat), 
+    .wb_pal_ack_i(wb_s2m_pal_ack), 
+    .wb_pal_err_i(wb_s2m_pal_err), 
+    .wb_pal_rty_i(wb_s2m_pal_rty)
+   );

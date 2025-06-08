@@ -15,19 +15,33 @@ module vga_top#(
     output wire hsync_o,
     output wire vsync_o,
 
-    // Wishbone bus
-    input  wire [31:0]  wb_adr_i,
-    input  wire [31:0]  wb_dat_i,
-    input  wire [3:0]   wb_sel_i,
-    input  wire         wb_we_i,
-    input  wire         wb_cyc_i,
-    input  wire         wb_stb_i,
-    input  wire [2:0]   wb_cti_i,
-    input  wire [1:0]   wb_bte_i,
-    output reg [31:0] wb_dat_o,
-    output reg          wb_ack_o,
-    output reg          wb_err_o,
-    output reg          wb_rty_o
+    // Wishbone VGA framebuffer bus
+    input  wire [31:0]  wb_fb_adr_i,
+    input  wire [31:0]  wb_fb_dat_i,
+    input  wire [3:0]   wb_fb_sel_i,
+    input  wire         wb_fb_we_i,
+    input  wire         wb_fb_cyc_i,
+    input  wire         wb_fb_stb_i,
+    input  wire [2:0]   wb_fb_cti_i,
+    input  wire [1:0]   wb_fb_bte_i,
+    output reg [31:0]   wb_fb_dat_o,
+    output reg          wb_fb_ack_o,
+    output reg          wb_fb_err_o,
+    output reg          wb_fb_rty_o,
+
+    // Wishbone VGA palette bus
+    input  wire [31:0]  wb_pal_adr_i,
+    input  wire [31:0]  wb_pal_dat_i,
+    input  wire [3:0]   wb_pal_sel_i,
+    input  wire         wb_pal_we_i,
+    input  wire         wb_pal_cyc_i,
+    input  wire         wb_pal_stb_i,
+    input  wire [2:0]   wb_pal_cti_i,
+    input  wire [1:0]   wb_pal_bte_i,
+    output reg [31:0]   wb_pal_dat_o,
+    output reg          wb_pal_ack_o,
+    output reg          wb_pal_err_o,
+    output reg          wb_pal_rty_o
 );
 
     /* ------------------------- START TIMING -------------------------- */ 
@@ -42,40 +56,60 @@ module vga_top#(
         .hsync_o(hsync_o),
         .vsync_o(vsync_o)
     );
-    /* ------------------------- END TIMING ------------------------------ */ 
 
-    /* ---------------------- START WISHBONE ----------------------------- */ 
+    /* ------------------- START WISHBONE FRAMEBUFFER -------------------- */ 
     localparam FRAMEBUFFER_SIZE_BYTES = H_DISPLAY * V_DISPLAY; // 64000 bytes
-    localparam RAM_DEPTH_WORDS = FRAMEBUFFER_SIZE_BYTES / 4;   // 16000 words
+    localparam FRAMEBUFFER_ADR_SIZE = $clog2(FRAMEBUFFER_SIZE_BYTES);
+    // Addressing notes:
+    // ...  
+    // Check this one out! Might give problems with higher addresses.. 
+    // Bit size might be wrong.
 
     wb_ram #(
         .dw(32),
         .depth(FRAMEBUFFER_SIZE_BYTES),
         .memfile(memfile)
-    ) wb_ram_i (
+    ) wb_ram_fb (
         .wb_clk_i(clk),
         .wb_rst_i(rst),
-
-        // Addressing notes:
-        // ...  
-        // Check this one out! Might give problems with higher addresses.. 
-        // Bit size might be wrong.
-
-        .wb_adr_i(wb_adr_i[$clog2(FRAMEBUFFER_SIZE_BYTES)-1:0]),
-
-        .wb_dat_i(wb_dat_i),
-        .wb_sel_i(wb_sel_i),
-        .wb_we_i(wb_we_i),
-        .wb_bte_i(wb_bte_i),
-        .wb_cti_i(wb_cti_i),
-        .wb_cyc_i(wb_cyc_i),
-        .wb_stb_i(wb_stb_i),
-
-        .wb_ack_o(wb_ack_o),
-        .wb_err_o(wb_err_o),
-        .wb_dat_o(wb_dat_o)
+        .wb_adr_i(wb_fb_adr_i[FRAMEBUFFER_ADR_SIZE-1:0]),
+        .wb_dat_i(wb_fb_dat_i),
+        .wb_sel_i(wb_fb_sel_i),
+        .wb_we_i (wb_fb_we_i),
+        .wb_bte_i(wb_fb_bte_i),
+        .wb_cti_i(wb_fb_cti_i),
+        .wb_cyc_i(wb_fb_cyc_i),
+        .wb_stb_i(wb_fb_stb_i),
+        .wb_ack_o(wb_fb_ack_o),
+        .wb_err_o(wb_fb_err_o),
+        .wb_dat_o(wb_fb_dat_o)
     );
 
-    assign wb_rty_o = 1'b0;  // if retry not used
-    /* ---------------------- END WISHBONE ------------------------------- */ 
+    assign wb_fb_rty_o = 1'b0;  // if retry not used
+
+    /* ---------------------- START WISHBONE PALETTE -------------------------- */ 
+    localparam PALETTE_SIZE_BYTES = 256;
+    localparam PALETTE_ADR_SIZE = $clog2(PALETTE_SIZE_BYTES);
+
+    wb_ram #(
+        .dw(32),
+        .depth(PALETTE_SIZE_BYTES),
+        .memfile("")
+    ) wb_ram_pal (
+        .wb_clk_i(clk),
+        .wb_rst_i(rst),
+        .wb_adr_i(wb_pal_adr_i[PALETTE_ADR_SIZE-1:0]),
+        .wb_dat_i(wb_pal_dat_i),
+        .wb_sel_i(wb_pal_sel_i),
+        .wb_we_i (wb_pal_we_i),
+        .wb_bte_i(wb_pal_bte_i),
+        .wb_cti_i(wb_pal_cti_i),
+        .wb_cyc_i(wb_pal_cyc_i),
+        .wb_stb_i(wb_pal_stb_i),
+        .wb_ack_o(wb_pal_ack_o),
+        .wb_err_o(wb_pal_err_o),
+        .wb_dat_o(wb_pal_dat_o)
+    );
+
+    assign wb_pal_rty_o = 1'b0;  // if retry not used
 endmodule

@@ -444,19 +444,33 @@ module swervolf_core
           ,.hsync_o         (hsync)
           ,.vsync_o         (vsync)
 
-          // Wishbone
-          ,.wb_adr_i        (wb_m2s_vga_adr)  
-          ,.wb_dat_i        (wb_m2s_vga_dat)  
-          ,.wb_sel_i        (wb_m2s_vga_sel)  
-          ,.wb_we_i         (wb_m2s_vga_we )  
-          ,.wb_cyc_i        (wb_m2s_vga_cyc)  
-          ,.wb_stb_i        (wb_m2s_vga_stb)  
-          ,.wb_cti_i        (wb_m2s_vga_cti)  
-          ,.wb_bte_i        (wb_m2s_vga_bte)  
-          ,.wb_dat_o        (wb_s2m_vga_dat)  
-          ,.wb_ack_o        (wb_s2m_vga_ack)  
-          ,.wb_err_o        (wb_s2m_vga_err)  
-          ,.wb_rty_o        (wb_s2m_vga_rty)  
+          // Wishbone VGA framebuffer bus
+          ,.wb_fb_adr_i        (wb_m2s_fb_adr)  
+          ,.wb_fb_dat_i        (wb_m2s_fb_dat)  
+          ,.wb_fb_sel_i        (wb_m2s_fb_sel)  
+          ,.wb_fb_we_i         (wb_m2s_fb_we )  
+          ,.wb_fb_cyc_i        (wb_m2s_fb_cyc)  
+          ,.wb_fb_stb_i        (wb_m2s_fb_stb)  
+          ,.wb_fb_cti_i        (wb_m2s_fb_cti)  
+          ,.wb_fb_bte_i        (wb_m2s_fb_bte)  
+          ,.wb_fb_dat_o        (wb_s2m_fb_dat)  
+          ,.wb_fb_ack_o        (wb_s2m_fb_ack)  
+          ,.wb_fb_err_o        (wb_s2m_fb_err)  
+          ,.wb_fb_rty_o        (wb_s2m_fb_rty)  
+
+          // Wishbone VGA palette bus
+          ,.wb_pal_adr_i        (wb_m2s_pal_adr)  
+          ,.wb_pal_dat_i        (wb_m2s_pal_dat)  
+          ,.wb_pal_sel_i        (wb_m2s_pal_sel)  
+          ,.wb_pal_we_i         (wb_m2s_pal_we )  
+          ,.wb_pal_cyc_i        (wb_m2s_pal_cyc)  
+          ,.wb_pal_stb_i        (wb_m2s_pal_stb)  
+          ,.wb_pal_cti_i        (wb_m2s_pal_cti)  
+          ,.wb_pal_bte_i        (wb_m2s_pal_bte)  
+          ,.wb_pal_dat_o        (wb_s2m_pal_dat)  
+          ,.wb_pal_ack_o        (wb_s2m_pal_ack)  
+          ,.wb_pal_err_o        (wb_s2m_pal_err)  
+          ,.wb_pal_rty_o        (wb_s2m_pal_rty)  
       );
 
       assign video_on_o = video_on;
