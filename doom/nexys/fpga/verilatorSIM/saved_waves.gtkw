@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
-[*] Sun Jun 15 16:06:25 2025
+[*] Sun Jun 15 19:48:27 2025
 [*]
 [dumpfile] "/home/roger/Documentos/2025/I/ie0424/proyectoFinal/DOOM1/doom/nexys/build/trace.vcd"
-[dumpfile_mtime] "Sun Jun 15 16:04:11 2025"
-[dumpfile_size] 2513572306
+[dumpfile_mtime] "Sun Jun 15 19:48:12 2025"
+[dumpfile_size] 127885326
 [savefile] "/home/roger/Documentos/2025/I/ie0424/proyectoFinal/DOOM1/doom/nexys/fpga/verilatorSIM/saved_waves.gtkw"
-[timestart] 4611539
+[timestart] 0
 [size] 1920 1050
-[pos] -1072 -16
-*-8.000000 92 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -1 -1
+*-15.000000 92 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.rvfpgasim.
 [treeopen] TOP.rvfpgasim.swervolf.
@@ -24,10 +24,10 @@
 [treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[7].gprff.
 [treeopen] TOP.rvfpgasim.swervolf.vga_top_i.
 [treeopen] TOP.rvfpgasim.swervolf.wb_intercon0.
-[sst_width] 334
-[signals_width] 304
+[sst_width] 198
+[signals_width] 370
 [sst_expanded] 1
-[sst_vpaned_height] 413
+[sst_vpaned_height] 398
 @800200
 -VGA timing
 @28
@@ -145,9 +145,15 @@ TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.is_first_h_line
 TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.is_first_v_line
 @22
 TOP.rgb[11:0]
-@23
 TOP.rvfpgasim.swervolf.rgb_doom[11:0]
 @1000200
 -VGA Pixel Control Unit
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.double_x
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.double_y
+@22
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.pp_yscale_state[3:0]
+@23
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.pixel_base_addr[15:0]
 [pattern_trace] 1
 [pattern_trace] 0

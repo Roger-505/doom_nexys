@@ -44,21 +44,29 @@ I_ShutdownGraphics(void)
 	/* Don't need to do anything really ... */
 }
 
-
 void
 I_SetPalette(byte* palette)
 {
 	static volatile uint32_t * const video_pal = (void*)(VID_PAL_BASE);
-	byte r, g, b;
+	byte r8, g8, b8;
+	uint8_t r4, g4, b4;
 
-	for (int i=0 ; i<256 ; i++) {
-		r = gammatable[usegamma][*palette++];
-		g = gammatable[usegamma][*palette++];
-		b = gammatable[usegamma][*palette++];
-		video_pal[i] = ((uint32_t)r << 16) | ((uint32_t)g << 8) | (uint32_t)b;
+	for (int i = 0; i < 256; i++) {
+		// Get gamma-corrected 8-bit values
+		r8 = gammatable[usegamma][*palette++];
+		g8 = gammatable[usegamma][*palette++];
+		b8 = gammatable[usegamma][*palette++];
+
+		// Convert 8-bit to 4-bit (right shift by 4)
+		r4 = r8 >> 4;
+		g4 = g8 >> 4;
+		b4 = b8 >> 4;
+
+		// Pack into 12-bit RGB444 format (you can store as 16- or 32-bit as needed)
+		// Here stored as 12 bits aligned to lower bits of 32-bit word
+		video_pal[i] = (r4 << 8) | (g4 << 4) | b4;
 	}
 }
-
 
 void
 I_UpdateNoBlit(void)

@@ -598,8 +598,6 @@ void D_DoomMain (void)
              "----------------------------\n",
              VERSION/100,VERSION%100);
 
-    while(1); // Branch to self, just testing vga at the moment...
-
     // init subsystems
     printf ("V_Init: allocate screens.\n");
     V_Init ();
