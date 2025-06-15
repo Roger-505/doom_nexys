@@ -1,9 +1,8 @@
-`default_nettype none
-
 module vga_top#(
     parameter H_DISPLAY = 300,
     parameter V_DISPLAY = 200,
-    parameter memfile = ""
+    parameter init_fb  = "",
+    parameter init_pal = ""
 )(
     input wire clk,          // 25 MHz
     input wire rst,
@@ -25,9 +24,9 @@ module vga_top#(
     input  wire         wb_fb_stb_i,
     input  wire [2:0]   wb_fb_cti_i,
     input  wire [1:0]   wb_fb_bte_i,
-    output reg [31:0]   wb_fb_dat_o,
-    output reg          wb_fb_ack_o,
-    output reg          wb_fb_err_o,
+    output wire [31:0]   wb_fb_dat_o,
+    output wire          wb_fb_ack_o,
+    output wire          wb_fb_err_o,
     output reg          wb_fb_rty_o,
 
     // Wishbone VGA palette bus
@@ -39,9 +38,9 @@ module vga_top#(
     input  wire         wb_pal_stb_i,
     input  wire [2:0]   wb_pal_cti_i,
     input  wire [1:0]   wb_pal_bte_i,
-    output reg [31:0]   wb_pal_dat_o,
-    output reg          wb_pal_ack_o,
-    output reg          wb_pal_err_o,
+    output wire [31:0]   wb_pal_dat_o,
+    output wire          wb_pal_ack_o,
+    output wire          wb_pal_err_o,
     output reg          wb_pal_rty_o
 );
 
@@ -72,7 +71,7 @@ module vga_top#(
     wb_ram #(
         .dw(32),
         .depth(FRAMEBUFFER_SIZE_BYTES),
-        .memfile(memfile)
+        .memfile(init_fb)
     ) wb_ram_fb (
         .wb_clk_i(clk),
         .wb_rst_i(rst),
@@ -93,10 +92,9 @@ module vga_top#(
         .vga_data_o     (fb_data)
     );
 
-    assign wb_fb_rty_o = 1'b0;  // if retry not used
-
     /* ---------------------- WISHBONE PALETTE -------------------------- */ 
-    localparam PALETTE_SIZE_BYTES = 256;
+    localparam PALETTE_ENTRIES = 256;
+    localparam PALETTE_SIZE_BYTES = PALETTE_ENTRIES*4;
     localparam PALETTE_ADR_SIZE = $clog2(PALETTE_SIZE_BYTES);
     wire pal_rd;
     wire [31:0] pal_rd_addr;
@@ -105,7 +103,7 @@ module vga_top#(
     wb_ram #(
         .dw(32),
         .depth(PALETTE_SIZE_BYTES),
-        .memfile("")
+        .memfile(init_pal)
     ) wb_ram_pal (
         .wb_clk_i       (clk),
         .wb_rst_i       (rst),
@@ -121,7 +119,8 @@ module vga_top#(
         .wb_err_o       (wb_pal_err_o),
         .wb_dat_o       (wb_pal_dat_o),
         .clk_vga        (clk),
-        .i_vga_rd       (pal_rd),
+        //.i_vga_rd       (pal_rd),
+        .i_vga_rd       (1'b1),         // Always enabled for now...
         .i_vga_rd_addr  (pal_rd_addr),
         .vga_data_o     (pal_data)
     );
@@ -140,8 +139,14 @@ module vga_top#(
         .fb_rd_o        (fb_rd),
         .pal_rd_data_i  (pal_data),
         .pal_rd_addr_o  (pal_rd_addr),
-        .pal_rd_o       (pal_rd),
+        // .pal_rd_o       (pal_rd),
         .rgb444         (rgb)
     );
+
+    // If rtry not used
+    always @(posedge clk) begin
+        wb_fb_rty_o     <= 1'b0;    
+        wb_pal_rty_o    <= 1'b0;
+    end
 
 endmodule

@@ -1,5 +1,3 @@
-`default_nettype none
-
 module vga_tg(
     input wire clk,          // 25 MHz
     input wire rst,

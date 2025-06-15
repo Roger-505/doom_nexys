@@ -201,20 +201,20 @@ module rvfpganexys
       .version        (4'd1));
 
 
-      // VGA test
-      // Testing displaying switches color
-      // represented as 12 bit RGB444 on VGA display
-      reg [11:0] rgb_reg;
       wire video_on;
       wire [9:0] x;
       wire [9:0] y;
       wire pixel_tick;
- 
-      always @(posedge clk_core) begin
-            rgb_reg <= i_sw[11:0];
-      end   
 
-      assign rgb = (video_on) ? rgb_reg : 12'b0;
+      // VGA test
+      // Testing displaying switches color
+      // represented as 12 bit RGB444 on VGA display
+      /*
+      always @(posedge clk_core)
+            rgb_test <= i_sw[11:0];
+
+      assign rgb = (i_sw[15] == 1'b1)   ? rgb_test : rgb_doom;
+    */
 
    swervolf_core
      #(.bootrom_file (bootrom_file),
@@ -290,7 +290,8 @@ module rvfpganexys
       .y_o            (y),
       .pixel_tick_o   (pixel_tick),
       .hsync_o        (hsync),
-      .vsync_o        (vsync));
+      .vsync_o        (vsync),
+      .rgb            (rgb));
 
    always @(posedge clk_core) begin
       o_led[15:0] <= gpio_out[15:0];

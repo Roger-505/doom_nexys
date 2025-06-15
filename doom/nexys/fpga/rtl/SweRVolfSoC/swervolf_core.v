@@ -87,6 +87,7 @@ module swervolf_core
     
     // VGA signals 
     output wire video_on_o,
+    output wire [11:0] rgb,
     output wire [9:0] x_o,
     output wire [9:0] y_o,
     output wire pixel_tick_o,
@@ -425,14 +426,33 @@ module swervolf_core
     localparam H_DISPLAY = 320;
     localparam V_DISPLAY = 200;
 
+
+      // VGA test
+      // Testing displaying switches color
+      // represented as 12 bit RGB444 on VGA display
+      reg [11:0] rgb_test;
+      wire [11:0] rgb_doom;
+      wire [15:0] i_sw;
+      assign i_sw = io_data[31:16];
+
+      always @(posedge clk)
+        if (!rstn)
+            rgb_test <= 12'b0;
+        else
+            rgb_test <= i_sw[11:0];
+
+      assign rgb = (i_sw[15] == 1'b1) ? rgb_test : rgb_doom;
+
       vga_top
       #(
         .H_DISPLAY(H_DISPLAY),
         .V_DISPLAY(V_DISPLAY),
     `ifdef VERILATOR
-        .memfile("./fpga/rtl/SweRVolfSoC/Peripherals/vga/boot_display.mem")
+        .init_fb("./fpga/rtl/SweRVolfSoC/Peripherals/vga/init_fb.mem"),
+        .init_pal("./fpga/rtl/SweRVolfSoC/Peripherals/vga/init_pal.mem")
     `else
-        .memfile("boot_display.mem")
+        .init_fb("init_fb.mem"),
+        .init_pal("init_pal.mem")
     `endif
       ) vga_top_i (
           .clk              (clk_vga)
@@ -443,6 +463,7 @@ module swervolf_core
           ,.pixel_tick_o    (pixel_tick)
           ,.hsync_o         (hsync)
           ,.vsync_o         (vsync)
+          ,.rgb             (rgb_doom)
 
           // Wishbone VGA framebuffer bus
           ,.wb_fb_adr_i        (wb_m2s_fb_adr)  

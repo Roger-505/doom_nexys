@@ -31,6 +31,7 @@ module rvfpgasim
    input wire  i_jtag_tms,
    input wire  i_jtag_tdi,
    input wire  i_jtag_trst_n,
+   input wire i_sw15,
    output wire o_jtag_tdo,
    output wire o_uart_tx,
    output wire o_gpio,
@@ -92,8 +93,9 @@ module rvfpgasim
 	swervolf.bootrom.ram.mem[0] = 64'h0000000000000067;
    end
 
+   wire [14:0]  i_swALL;
    wire [15:0]  i_sw;
-   assign  i_sw = 16'hFE34;
+    assign  i_sw = {i_sw15, i_swALL};
 
    wire [5:0]  ram_awid;
    wire [31:0] ram_awaddr;
@@ -206,17 +208,18 @@ module rvfpgasim
       // VGA test
       // Testing displaying switches color
       // represented as 12 bit RGB444 on VGA display
-      reg [11:0] rgb_reg;
       wire video_on;
       wire [9:0] x;
       wire [9:0] y;
       wire pixel_tick;
+      /*
 
       always @(posedge clk) begin
             rgb_reg <= i_sw[11:0];
       end
 
       assign rgb = (video_on) ? rgb_reg : 12'b0;
+      */
 
    swervolf_core
      #(.bootrom_file (bootrom_file))
@@ -285,6 +288,7 @@ module rvfpgasim
       .y_o            (y),
       .pixel_tick_o   (pixel_tick),
       .hsync_o        (hsync),
-      .vsync_o        (vsync));
+      .vsync_o        (vsync),
+      .rgb            (rgb));
 
 endmodule

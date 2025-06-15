@@ -177,6 +177,12 @@ int main(int argc, char **argv, char **env)
     }
     top->clk = !top->clk;
 
+
+    if (main_time > 5000)
+        top->i_sw15 = 0;
+    else
+        top->i_sw15 = 1;
+
     main_time+=10;
   }
 

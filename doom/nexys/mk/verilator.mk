@@ -9,7 +9,7 @@ VERILATOR ?= verilator
 # Simulation options
 WAVE=trace.vcd
 WAVE_FILE=$(BUILD_DIR)/$(WAVE)
-TIMEOUT=50000000
+TIMEOUT=500000
 SAVED_WAVES=$(F_VERILATOR)/saved_waves.gtkw
 RAM_INIT_FILE=$(B_MEM_S)
 

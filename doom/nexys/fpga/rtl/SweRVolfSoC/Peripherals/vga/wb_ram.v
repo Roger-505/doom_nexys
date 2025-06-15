@@ -22,21 +22,21 @@ module wb_ram
    parameter depth = 256,
    parameter aw    = $clog2(depth),
    parameter memfile = "")
-  (input 	   wb_clk_i,
-   input 	   wb_rst_i,
+  (input wire wb_clk_i,
+   input wire wb_rst_i,
 
-   input [aw-1:0]  wb_adr_i,
-   input [dw-1:0]  wb_dat_i,
-   input [3:0] 	   wb_sel_i,
-   input 	   wb_we_i,
-   input [1:0] 	   wb_bte_i,
-   input [2:0] 	   wb_cti_i,
-   input 	   wb_cyc_i,
-   input 	   wb_stb_i,
+   input wire [aw-1:0]  wb_adr_i,
+   input wire [dw-1:0]  wb_dat_i,
+   input wire [3:0] 	   wb_sel_i,
+   input wire wb_we_i,
+   input wire [1:0] 	   wb_bte_i,
+   input wire [2:0] 	   wb_cti_i,
+   input wire  wb_cyc_i,
+   input wire wb_stb_i,
 
    output reg 	   wb_ack_o,
-   output 	   wb_err_o,
-   output [dw-1:0] wb_dat_o,
+   output wire wb_err_o,
+   output wire [dw-1:0] wb_dat_o,
    
    // For VGA access
    input  wire          clk_vga,

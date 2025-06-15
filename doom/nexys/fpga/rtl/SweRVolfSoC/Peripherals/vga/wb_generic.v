@@ -18,11 +18,11 @@
 module wb_ram_generic
   #(parameter depth=256,
     parameter memfile = "")
-  (input clk,
-   input [3:0]	 we,
-   input [31:0]  din,
-   input [$clog2(depth)-1:0] 	 waddr,
-   input [$clog2(depth)-1:0] 	 raddr,
+  (input wire clk,
+   input wire [3:0]	 we,
+   input wire [31:0]  din,
+   input wire [$clog2(depth)-1:0] 	 waddr,
+   input wire [$clog2(depth)-1:0] 	 raddr,
    output reg [31:0] dout,
 
    // Dual port for VGA access.
@@ -32,7 +32,8 @@ module wb_ram_generic
    output reg  [31:0] vga_dout
   );
 
-   reg [31:0] 	 mem [0:depth-1] /* verilator public */;
+   (* ram_decomp = "power" *) 
+    reg [31:0] 	 mem [0:depth-1] /* verilator public */;
 
    always @(posedge clk) begin
       if (we[0]) mem[waddr][7:0]   <= din[7:0];
