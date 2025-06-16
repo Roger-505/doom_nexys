@@ -129,6 +129,20 @@ wire        wb_s2m_pal_ack;
 wire        wb_s2m_pal_err;
 wire        wb_s2m_pal_rty;
 
+// VGA CTRL
+wire [31:0] wb_m2s_ctrl_adr;
+wire [31:0] wb_m2s_ctrl_dat;
+wire  [3:0] wb_m2s_ctrl_sel;
+wire        wb_m2s_ctrl_we;
+wire        wb_m2s_ctrl_cyc;
+wire        wb_m2s_ctrl_stb;
+wire  [2:0] wb_m2s_ctrl_cti;
+wire  [1:0] wb_m2s_ctrl_bte;
+wire [31:0] wb_s2m_ctrl_dat;
+wire        wb_s2m_ctrl_ack;
+wire        wb_s2m_ctrl_err;
+wire        wb_s2m_ctrl_rty;
+
 wb_intercon wb_intercon0
    (.wb_clk_i           (wb_clk),
     .wb_rst_i           (wb_rst),
@@ -257,5 +271,19 @@ wb_intercon wb_intercon0
     .wb_pal_dat_i(wb_s2m_pal_dat), 
     .wb_pal_ack_i(wb_s2m_pal_ack), 
     .wb_pal_err_i(wb_s2m_pal_err), 
-    .wb_pal_rty_i(wb_s2m_pal_rty)
+    .wb_pal_rty_i(wb_s2m_pal_rty),
+
+// VGA CTRL
+    .wb_ctrl_adr_o(wb_m2s_ctrl_adr), 
+    .wb_ctrl_dat_o(wb_m2s_ctrl_dat), 
+    .wb_ctrl_sel_o(wb_m2s_ctrl_sel), 
+    .wb_ctrl_we_o (wb_m2s_ctrl_we ), 
+    .wb_ctrl_cyc_o(wb_m2s_ctrl_cyc), 
+    .wb_ctrl_stb_o(wb_m2s_ctrl_stb), 
+    .wb_ctrl_cti_o(wb_m2s_ctrl_cti), 
+    .wb_ctrl_bte_o(wb_m2s_ctrl_bte), 
+    .wb_ctrl_dat_i(wb_s2m_ctrl_dat), 
+    .wb_ctrl_ack_i(wb_s2m_ctrl_ack), 
+    .wb_ctrl_err_i(wb_s2m_ctrl_err), 
+    .wb_ctrl_rty_i(wb_s2m_ctrl_rty)
    );

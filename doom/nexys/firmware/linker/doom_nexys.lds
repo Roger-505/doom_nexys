@@ -2,8 +2,8 @@ OUTPUT_ARCH("riscv")
 ENTRY(_start)
 
 MEMORY {
-    WAD (rwx)    : ORIGIN = 0x00000000, LENGTH = 5M     /* doom1.wad */
-    RAM (wxa!ri) : ORIGIN = 0x00420000, LENGTH = 64M
+    WAD (rwx)    : ORIGIN = 0x00000000, LENGTH = 12M     /* doom1.wad */
+    RAM (wxa!ri) : ORIGIN = 0x00c00000, LENGTH = 64M
 }
 
 SECTIONS {

@@ -26,9 +26,8 @@
 #define UART_BASE	0x80002000
 #define REG_LSR     (5 * 4)      // Line Status Register offset
 #define LSR_THRE    0x20         // Transmitter Holding Register Empty
-#define LED_BASE	0x83000000
 
 #define VID_BASE        0x80000000
 #define VID_FB_BASE	    (VID_BASE + 0x10000)
 #define VID_PAL_BASE    (VID_BASE + 0x20000)
-#define VID_CTRL_BASE	(VID_BASE + 0x30000)
+#define VID_CTRL_BASE	(VID_BASE + 0x20500)

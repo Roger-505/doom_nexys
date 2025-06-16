@@ -41,7 +41,21 @@ module vga_top#(
     output wire [31:0]   wb_pal_dat_o,
     output wire          wb_pal_ack_o,
     output wire          wb_pal_err_o,
-    output reg          wb_pal_rty_o
+    output reg          wb_pal_rty_o,
+
+    // Wishbone VGA CTRL
+    input  wire [31:0]  wb_ctrl_adr_i,
+    input  wire [31:0]  wb_ctrl_dat_i,
+    input  wire [3:0]   wb_ctrl_sel_i,
+    input  wire         wb_ctrl_we_i,
+    input  wire         wb_ctrl_cyc_i,
+    input  wire         wb_ctrl_stb_i,
+    input  wire [2:0]   wb_ctrl_cti_i,
+    input  wire [1:0]   wb_ctrl_bte_i,
+    output wire [31:0]  wb_ctrl_dat_o,
+    output wire         wb_ctrl_ack_o,
+    output wire         wb_ctrl_err_o,
+    output wire         wb_ctrl_rty_o
 );
 
     /* ------------------------- TIMING -------------------------- */ 
@@ -140,7 +154,21 @@ module vga_top#(
         .pal_rd_data_i  (pal_data),
         .pal_rd_addr_o  (pal_rd_addr),
         // .pal_rd_o       (pal_rd),
-        .rgb444         (rgb)
+        .rgb444         (rgb),
+
+        // Wishbone CTRL
+        .wb_adr_i  (wb_ctrl_adr_i),
+        .wb_dat_i  (wb_ctrl_dat_i),
+        .wb_sel_i  (wb_ctrl_sel_i),
+        .wb_we_i   (wb_ctrl_we_i),
+        .wb_cyc_i  (wb_ctrl_cyc_i),
+        .wb_stb_i  (wb_ctrl_stb_i),
+        .wb_cti_i  (wb_ctrl_cti_i),
+        .wb_bte_i  (wb_ctrl_bte_i),
+        .wb_dat_o  (wb_ctrl_dat_o),
+        .wb_ack_o  (wb_ctrl_ack_o),
+        .wb_err_o  (wb_ctrl_err_O),
+        .wb_rty_o  (wb_ctrl_rty_o)
     );
 
     // If rtry not used

@@ -1,15 +1,15 @@
 [*]
 [*] GTKWave Analyzer v3.3.116 (w)1999-2023 BSI
-[*] Sun Jun 15 19:48:27 2025
+[*] Sun Jun 15 23:39:55 2025
 [*]
 [dumpfile] "/home/roger/Documentos/2025/I/ie0424/proyectoFinal/DOOM1/doom/nexys/build/trace.vcd"
-[dumpfile_mtime] "Sun Jun 15 19:48:12 2025"
-[dumpfile_size] 127885326
+[dumpfile_mtime] "Sun Jun 15 23:20:40 2025"
+[dumpfile_size] 45934908725
 [savefile] "/home/roger/Documentos/2025/I/ie0424/proyectoFinal/DOOM1/doom/nexys/fpga/verilatorSIM/saved_waves.gtkw"
 [timestart] 0
 [size] 1920 1050
-[pos] -1 -1
-*-15.000000 92 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
+[pos] -976 -16
+*-15.000000 29561 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1 -1
 [treeopen] TOP.
 [treeopen] TOP.rvfpgasim.
 [treeopen] TOP.rvfpgasim.swervolf.
@@ -23,12 +23,14 @@
 [treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[6].gprff.
 [treeopen] TOP.rvfpgasim.swervolf.swerv_eh1.swerv.dec.arf.gpr_banks[0].gpr[7].gprff.
 [treeopen] TOP.rvfpgasim.swervolf.vga_top_i.
+[treeopen] TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_fb.
+[treeopen] TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_pal.
 [treeopen] TOP.rvfpgasim.swervolf.wb_intercon0.
-[sst_width] 198
+[sst_width] 325
 [signals_width] 370
 [sst_expanded] 1
-[sst_vpaned_height] 398
-@800200
+[sst_vpaned_height] 250
+@c00200
 -VGA timing
 @28
 TOP.rvfpgasim.swervolf.vga_top_i.clk
@@ -39,7 +41,7 @@ TOP.rvfpgasim.swervolf.vga_top_i.vsync_o
 @24
 TOP.rvfpgasim.swervolf.vga_top_i.x_o[9:0]
 TOP.rvfpgasim.swervolf.vga_top_i.y_o[9:0]
-@1000200
+@1401200
 -VGA timing
 @c00200
 -CPU regs and exu
@@ -120,7 +122,7 @@ TOP.rvfpgasim.swervolf.axi2wb.o_wb_adr[19:2]
 @1401200
 -group_end
 -CPU regs and exu
-@800200
+@c00200
 -VGA Pixel Control Unit
 @28
 TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.rst
@@ -146,14 +148,66 @@ TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.is_first_v_line
 @22
 TOP.rgb[11:0]
 TOP.rvfpgasim.swervolf.rgb_doom[11:0]
-@1000200
+@1401200
 -VGA Pixel Control Unit
+@c00200
+-Doubling
 @28
 TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.double_x
-TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.double_y
 @22
 TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.pp_yscale_state[3:0]
-@23
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.double_y
+@22
 TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.pixel_base_addr[15:0]
+@1401200
+-Doubling
+@c00200
+-Wishbone and VGA regs
+@22
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.vs_frame_cnt[15:0]
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.vs_in_vbl
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_ack_o
+@22
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_adr_i[31:0]
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_bte_i[1:0]
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_cti_i[2:0]
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_cyc_i
+@22
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_dat_i[31:0]
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_dat_o[31:0]
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_en
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_err_o
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_rty_o
+@22
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_sel_i[3:0]
+@28
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_stb_i
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.wb_we_i
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.is_last_h_line
+TOP.rvfpgasim.swervolf.vga_top_i.vga_pcu_i.is_last_v_line
+@1401200
+-Wishbone and VGA regs
+@800200
+-Writing to FB Wishbone RAM
+@22
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_fb.ram0.din[31:0]
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_fb.ram0.we[3:0]
+@24
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_fb.ram0.waddr[13:0]
+@1000200
+-Writing to FB Wishbone RAM
+@800201
+-Writing to PAL Wishbone RAM
+@25
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_pal.ram0.waddr[7:0]
+@23
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_pal.ram0.we[3:0]
+TOP.rvfpgasim.swervolf.vga_top_i.wb_ram_pal.ram0.din[31:0]
+@1000201
+-Writing to PAL Wishbone RAM
 [pattern_trace] 1
 [pattern_trace] 0

@@ -234,7 +234,7 @@ module axi_intercon
   `AXI_TYPEDEF_RESP_T(mst_resp_t, b_chan_slv_t, r_chan_slv_t)
 
   localparam rule_t [1:0] AddrMap = '{
-    '{idx: 32'd0, start_addr: 32'h80000000, end_addr: 32'h80020000},
+    '{idx: 32'd0, start_addr: 32'h80000000, end_addr: 32'h80020600},
     '{idx: 32'd1, start_addr: 32'h00000000, end_addr: 32'h08000000}};
    slv_req_t  [2:0] masters_req;
    slv_resp_t [2:0] masters_resp;

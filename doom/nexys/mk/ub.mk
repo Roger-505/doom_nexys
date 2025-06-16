@@ -1,5 +1,6 @@
 # === Vector addresses === #
-RESET_VECTOR ?= 0x00420000	
+# RESET_VECTOR ?= 0x00420000	
+RESET_VECTOR ?= 0x00c00000
 FLASH_ADDR   ?= 0x0
 
 gen_ub: $(UB)

@@ -20,21 +20,7 @@ module vga_pcu#(
     // output wire         pal_rd_o,
 
     // RGB output
-    output wire [11:0]  rgb444,
-
-    // Wishbone VGA CTRL
-    input  wire [31:0]  wb_adr_i,
-    input  wire [31:0]  wb_dat_i,
-    input  wire [3:0]   wb_sel_i,
-    input  wire         wb_we_i,
-    input  wire         wb_cyc_i,
-    input  wire         wb_stb_i,
-    input  wire [2:0]   wb_cti_i,
-    input  wire [1:0]   wb_bte_i,
-    output reg  [31:0]  wb_dat_o,
-    output reg          wb_ack_o,
-    output reg          wb_err_o,
-    output reg          wb_rty_o
+    output wire [11:0]  rgb444
 );
 
     localparam H_DISPLAY = 640;
@@ -149,31 +135,10 @@ module vga_pcu#(
 		vs_in_vbl <= (vs_in_vbl & ~is_first_v_line) | (is_last_h_line & is_last_v_line);
 
 	always @(posedge clk)
-		if (!rst)
+		if (rst)
 			vs_frame_cnt <= 0;
 		else
 			vs_frame_cnt <= vs_frame_cnt + (is_last_h_line & is_last_v_line);
-
-    /* ---- Wishbone interface for registers ---- */
-     wire wb_en = wb_cyc_i & wb_stb_i;
-
-    // Register read response
-    always @(posedge clk) begin
-        wb_ack_o <= 1'b0;
-        wb_err_o <= 1'b0;
-        wb_rty_o <= 1'b0;
-
-        if (wb_en && !wb_ack_o) begin
-            wb_ack_o <= 1'b1;
-            case (wb_adr_i[3:2])  // assuming 32-bit aligned
-                2'b00: wb_dat_o <= {15'b0, vs_in_vbl, vs_frame_cnt}; // 0x00 offset
-                default: begin
-                    wb_dat_o <= 32'hDEADBEEF;
-                    wb_err_o <= 1'b1;  // Invalid address
-                end
-            endcase
-        end
-    end   
 
     /* ---- Timing signals logic ---- */
     assign is_first_h_line = (video_on) & (x == 0);

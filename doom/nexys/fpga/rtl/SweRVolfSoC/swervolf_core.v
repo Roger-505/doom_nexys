@@ -492,6 +492,20 @@ module swervolf_core
           ,.wb_pal_ack_o        (wb_s2m_pal_ack)  
           ,.wb_pal_err_o        (wb_s2m_pal_err)  
           ,.wb_pal_rty_o        (wb_s2m_pal_rty)  
+
+          // Wishbone VGA CTRL bus
+          ,.wb_ctrl_adr_i        (wb_m2s_ctrl_adr)  
+          ,.wb_ctrl_dat_i        (wb_m2s_ctrl_dat)  
+          ,.wb_ctrl_sel_i        (wb_m2s_ctrl_sel)  
+          ,.wb_ctrl_we_i         (wb_m2s_ctrl_we )  
+          ,.wb_ctrl_cyc_i        (wb_m2s_ctrl_cyc)  
+          ,.wb_ctrl_stb_i        (wb_m2s_ctrl_stb)  
+          ,.wb_ctrl_cti_i        (wb_m2s_ctrl_cti)  
+          ,.wb_ctrl_bte_i        (wb_m2s_ctrl_bte)  
+          ,.wb_ctrl_dat_o        (wb_s2m_ctrl_dat)  
+          ,.wb_ctrl_ack_o        (wb_s2m_ctrl_ack)  
+          ,.wb_ctrl_err_o        (wb_s2m_ctrl_err)  
+          ,.wb_ctrl_rty_o        (wb_s2m_ctrl_rty)  
       );
 
       assign video_on_o = video_on;

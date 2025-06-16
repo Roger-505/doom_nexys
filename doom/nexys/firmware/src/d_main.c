@@ -384,7 +384,7 @@ void D_DoomLoop (void)
 
         end_cycle = READ_CSR(mcycle);        
         num_cycles = end_cycle - start_cycle;
-        printf("Number of cycles on this loop: %d", num_cycles);
+        // printf("Number of cycles on this loop: %d", num_cycles);
     }
 }
 
@@ -415,7 +415,7 @@ void D_PageTicker (void)
 //
 void D_PageDrawer (void)
 {
-    V_DrawPatch (0,0, 0, W_CacheLumpName(pagename, PU_CACHE));
+    V_DrawPatch (0,0, 0, (patch_t*)W_CacheLumpName(pagename, PU_CACHE));
 }
 
 
@@ -556,7 +556,7 @@ void IdentifyVersion (void)
     D_AddFile ("tnt.wad");
 #elif 0
     gamemode = retail;
-    D_AddFile ("doomu.wad");
+    D_AddFile ("doom1.wad");    // Doom Ultimate
 #elif 0
     gamemode = registered;
     D_AddFile ("doom.wad");
