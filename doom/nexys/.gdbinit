@@ -1,3 +1,3 @@
 target remote localhost:3333
-set $pc=0x420000
+set $pc=0x80000000
 continue

@@ -1,9 +1,10 @@
-FLASH_ADDR ?= 0x0
-gen_rom: $(B_MEM)
+BOOTROM_ADDR ?= 0x80000000
+
+gen_rom: $(B_MEM) $(B_DIS)
 
 $(B_ELF): $(B_SRC) | $(BUILD_DIR)
 	$(ECHO) " CC       $(B_SRC_DIR)/*.S"
-	$(Q)$(CC) -nostartfiles -march=rv32im -mabi=ilp32 -T$(B_LD) -o $@ $^
+	$(Q)$(CC) -g -nostartfiles -march=rv32im -mabi=ilp32 -T$(B_LD) -o $@ $^
 
 $(B_BIN): $(B_ELF)
 	$(ECHO) " OBJCOPY  $(notdir $<) -> $(notdir $@)"
@@ -18,8 +19,8 @@ $(B_MEM): $(B_VHD)
 	$(Q)cp $< $@
 
 $(B_DIS): $(B_ELF)
-	$(ECHO) " OBJCOPY  $(notdir $<) -> $(notdir $@)"
-	$(Q)$(OBJCOPY) -d $< > $@
+	$(ECHO) " OBJDUMP  $(notdir $<) -> $(notdir $@)"
+	$(Q)$(OBJDUMP) -d $< > $@
 
 $(B_HEX): $(B_ELF)
 	$(ECHO) " OBJCOPY  $(notdir $<) -> $(notdir $@)"
