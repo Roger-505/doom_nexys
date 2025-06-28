@@ -1,6 +1,9 @@
 # Build dir
 *build/
 
+# Python virtual enviroment
+venv*
+
 # Object files
 *.o
 *.bin

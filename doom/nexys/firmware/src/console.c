@@ -47,24 +47,30 @@ console_putchar(char c)
 	uart_regs->data = (uint32_t)c;
 }
 
+
 char
 console_getchar(void)
 {
-	int32_t c = 1;
-	//do {
-	//	c = uart_regs->data;
-	//} while (c & 0x80000000);
-	return c;
+	// Wait until data is ready in the FIFO
+	while (!(*(volatile uint8_t *)(UART_BASE + REG_LSR) & 0x01)) {
+		/* do nothing */
+	}
+
+	// Read the data register (only lower 8 bits are valid)
+	return (char)(uart_regs->data & 0xff);
 }
 
 int
 console_getchar_nowait(void)
 {
-    /* Implement getchar if we want UART keyboard */
-	int32_t c = -1;
-	// c = uart_regs->data;
-	// return c & 0x80000000 ? -1 : (c & 0xff);
-    return c;
+	// Check if data is available
+	if (*(volatile uint8_t *)(UART_BASE + REG_LSR) & 0x01) {
+		// Return received character
+		return (int)(uart_regs->data & 0xff);
+	}
+
+	// No character available
+	return -1;
 }
 
 void

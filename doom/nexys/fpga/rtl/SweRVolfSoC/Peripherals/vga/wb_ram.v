@@ -67,7 +67,7 @@ module wb_ram
       adr_r   <= adr;
       valid_r <= valid;
       //Ack generation
-      wb_ack_o <= valid & (!((wb_cti_i == 3'b000) | (wb_cti_i == 3'b111)) | !wb_ack_o);
+       wb_ack_o <= valid;
       if(!wb_rst_i) begin
 	 adr_r <= {aw{1'b0}};
 	 valid_r <= 1'b0;
@@ -75,7 +75,7 @@ module wb_ram
       end
    end
 
-   wire ram_we = wb_we_i & valid & wb_ack_o;
+   wire ram_we = wb_we_i & valid;
 
    //TODO:ck for burst address errors
    assign wb_err_o =  1'b0;
@@ -87,7 +87,7 @@ module wb_ram
      (.clk          (wb_clk_i),
       .we           ({4{ram_we}} & wb_sel_i),
       .din          (wb_dat_i),
-      .waddr        (adr_r[aw-1:2]),
+      .waddr        (adr[aw-1:2]),
       .raddr        (adr[aw-1:2]),
       .dout         (wb_dat_o),
       .clk_vga      (clk_vga),
