@@ -17,7 +17,7 @@
 
 /* 24-bit address in SPI Flash where application image is stored */
 #ifndef BOOTROM_ADDR
-#define BOOTROM_ADDR 0x000000
+#define BOOTROM_ADDR 0x00c00000
 #endif
 
 /* Flash needs 300 us to warm up from power-on. In practice, this is only an
@@ -37,6 +37,10 @@
 
 #define SPI_SPSS_INIT 0x1
 #define SPI_SPSR_RX_CHECK 0x01 /* Check bit 0 is cleared, fifo !empty*/
+
+/* WAD defines */
+#define WAD_BASE_ADDR	0x0
+#define WAD_SIZE	11159840
 
 	/* Registers used
 	ra link register
@@ -82,6 +86,11 @@ spi_init:
 	li	a0, ((BOOTROM_ADDR & 0xFF) <<24) | ((BOOTROM_ADDR & 0xFF00) << 8) | ((BOOTROM_ADDR & 0xFF0000) >> 8) | 0x3
 	jal	spi_xfer
 
+	/* (Debug) Print bootrom address */
+	li a0, BOOTROM_ADDR
+	la a5, bin_addr_str
+	jal print_label_and_hex
+
 	/* Get magic word */
 	jal	spi_xfer
 
@@ -125,9 +134,16 @@ read_header:
 	jal	spi_xfer
 	jal	spi_xfer
 
+	/* Print ACK message */
+	la a5, bin_copy
+	jal uart_writestr
+
+	mv	a0, s1
+	la	a5, bin_addr_str
+	jal	print_label_and_hex
+
 	/* Clear number of copied bytes */
 	addi	s4, zero, 0
-	
 copy_to_ram:
 	jal	spi_xfer
 
@@ -143,7 +159,60 @@ copy_to_ram:
 	/* Check if file is completely copied */
 	bgt	s0, s4, copy_to_ram
 
+	/* Set SPI flash to read from WAD_BASE_ADDR */
+	li a0, ((WAD_BASE_ADDR & 0xFF) <<24) | ((WAD_BASE_ADDR & 0xFF00) << 8) | ((WAD_BASE_ADDR & 0xFF0000) >> 8) | 0x3
+	jal	spi_xfer
+
+	/* (Debug) Print WAD address */
+	li a0, WAD_BASE_ADDR
+	la a5, wad_addr_str
+	jal print_label_and_hex
+
+	/* Set WAD size */
+	li s0,WAD_SIZE
+
+	/* Set WAD base address */
+	li s1,WAD_BASE_ADDR
+
+	/* Print ACK message */
+	la a5, wad_copy
+	jal uart_writestr
+
+	mv	a0, s1
+	la	a5, wad_addr_str
+	jal	print_label_and_hex
+
+	/* Clear number of copied bytes */
+	addi	s4, zero, 0
+
+copy_wad:
+	jal spi_xfer
+
+	/* Set memory store address */
+	add	t1, s1, s4
+
+	/* Write word to RAM */
+	sw	a1, 0(t1)
+
+	/* Increase counter */
+	addi	s4, s4, 4
+
+	# Show progress every 1024 bytes
+	andi	t2, s4, 1023
+	bnez	t2, 1f
+	mv	a0, s4
+	la	a5, wad_progress_str
+	jal	print_label_and_hex
+
+	/* Check if file is completely copied */
+1:	bgt	s0, s4, copy_wad
+	
+
 	/* Jump to entry point */
+	mv	a0, s2
+	la	a5, jump_addr_str
+	jal	print_label_and_hex
+
 goto_reset:
 	jr	s2
 
@@ -189,3 +258,18 @@ spi_xfer_poll:
 	bnez	t0, spi_xfer_loop
 
 	ret
+
+bin_copy:
+	.string "Copying binary contents to RAM...\r\n"
+wad_copy:
+	.string "Copying WAD contents to RAM...\r\n"
+bin_addr_str:
+	.string "Binary base address: "
+wad_addr_str:
+	.string "WAD base address: "
+wad_progress_str:
+	.string "WAD bytes copied: "
+jump_addr_str:
+	.string "Jumping to address: "
+magic_word_str:
+	.string "U-Boot Endianess Test (Magic Word): "

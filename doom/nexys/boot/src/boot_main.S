@@ -40,7 +40,8 @@ _start:
 
 	*/
 	li	t0, 0xAAAA0000
-	csrw	0x7c0, t0
+	# csrw	0x7c0, t0
+	nop
 
 	jal	uart_init
 
@@ -96,6 +97,7 @@ uart_init:
 	sb	zero, REG_IER(a4)
 	ret
 
+.globl uart_writestr
 uart_writestr: /* Write string at a5 */
 
 	/* Load first byte */
@@ -117,6 +119,76 @@ putchar:
 	bne t0, zero, nextchar
 
 	ret
+
+    .globl print_label_and_hex
+    .globl print_hex
+    .globl uart_putchar
+
+/* a5 = label string pointer */
+/* a0 = 32-bit number to print */
+/* s5 = return address */
+print_label_and_hex:
+    /* Prologue */ 
+    mv s5,ra
+
+    jal uart_writestr       /* print label string */
+    jal print_hex           /* print number in hex */
+    li  a0, '\r'
+    jal uart_putchar
+    li  a0, '\n'
+    jal uart_putchar
+
+    /* Epilogue */ 
+    mv ra,s5
+    ret
+
+/* print_hex:
+ * prints 8 hex digits (32-bit number in a0)
+ * uses uart_putchar to send characters
+ * s6 = return address
+ */
+print_hex:
+    /* Epilogue */
+    mv s6, ra
+
+    /* We'll print from highest nibble (28) down to lowest nibble (0) */
+    li  t0, 28          /* bit shift start */
+    li 	t5, 10		/* Compare value for hex chars */
+print_hex_loop:
+    /* Extract nibble */
+    srl t1, a0, t0
+    andi t1, t1, 0x0F
+
+    /* Convert nibble to ASCII hex */
+    li  t2, '0'
+    blt t1, t5, print_hex_digit
+    addi t1, t1, -10
+    li  t2, 'A'
+print_hex_digit:
+    add t1, t1, t2
+
+    /* Output character */
+    mv  a0, t1
+    jal uart_putchar
+
+    /* Decrement bit shift by 4 */
+    addi t0, t0, -4
+    bgez t0, print_hex_loop
+
+    /* Epilogue */
+    mv ra,s6
+    ret
+
+/* uart_putchar: sends a single char in a0 over UART */
+/* uses REG_LSR and LSR_THRE as UART status bits */
+uart_putchar:
+    li a4,UART_BASE
+1:  lb  t1, REG_LSR(a4)
+    andi    t1, t1, LSR_THRE
+    beqz    t1, 1b
+    sb  a0, 0(a4)
+    ret
+
 
 boot_msg:
 	.string "Booting Doom Nexys...\r\n"

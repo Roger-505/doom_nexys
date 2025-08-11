@@ -34,6 +34,23 @@ riscv set_ir idcode 0x9
 riscv set_ir dmi 0x22
 riscv set_ir dtmcs 0x23
 
+# Expose custom VeeR's CSR dmst (csr1988)
+riscv expose_csrs 1988
+
+# Custom event hooks to flush VeeR ICACHE prior to step/resume
+proc veer_eh1_execute_fence {} {
+    # Execute fence + fence.i via "dmst" register
+    reg csr1988 0x3
+}
+
+$_TARGETNAME configure -event resume-start {
+    veer_eh1_execute_fence
+}
+
+$_TARGETNAME configure -event step-start {
+    veer_eh1_execute_fence
+}
+
 # Conclude OpenOCD configuration
 init
 

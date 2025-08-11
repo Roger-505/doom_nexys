@@ -1,7 +1,7 @@
 # === Vector addresses === #
 # RESET_VECTOR ?= 0x00420000	
-RESET_VECTOR ?= 0x00c00000
-FLASH_ADDR   ?= 0x0
+RESET_VECTOR  ?= 0x00c00000
+RAM_BASE_ADDR ?= 0x00c00000
 
 gen_ub: $(UB)
 
@@ -12,7 +12,7 @@ $(UB): $(BIN) | $(BIN_DIR)
 	 -A riscv \
 	 -C none \
 	 -T standalone \
-	 -a 0x0 \
+	 -a $(RAM_BASE_ADDR)\
 	 -e $(RESET_VECTOR) \
 	 -n '$(@F)' \
 	 -d $< \

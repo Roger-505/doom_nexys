@@ -31,3 +31,6 @@
 #define VID_FB_BASE	    (VID_BASE + 0x10000)
 #define VID_PAL_BASE    (VID_BASE + 0x20000)
 #define VID_CTRL_BASE	(VID_BASE + 0x20500)
+
+#define WAD_RAM_ADDR   ((void*)0x00000000)
+#define WAD_RAM_SIZE   (11159840)
