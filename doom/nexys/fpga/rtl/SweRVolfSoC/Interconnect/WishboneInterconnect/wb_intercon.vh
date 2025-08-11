@@ -143,6 +143,20 @@ wire        wb_s2m_ctrl_ack;
 wire        wb_s2m_ctrl_err;
 wire        wb_s2m_ctrl_rty;
 
+// PS2
+wire [31:0] wb_m2s_ps2_adr;
+wire [31:0] wb_m2s_ps2_dat;
+wire  [3:0] wb_m2s_ps2_sel;
+wire        wb_m2s_ps2_we;
+wire        wb_m2s_ps2_cyc;
+wire        wb_m2s_ps2_stb;
+wire  [2:0] wb_m2s_ps2_cti;
+wire  [1:0] wb_m2s_ps2_bte;
+wire [31:0] wb_s2m_ps2_dat;
+wire        wb_s2m_ps2_ack;
+wire        wb_s2m_ps2_err;
+wire        wb_s2m_ps2_rty;
+
 wb_intercon wb_intercon0
    (.wb_clk_i           (wb_clk),
     .wb_rst_i           (wb_rst),
@@ -285,5 +299,19 @@ wb_intercon wb_intercon0
     .wb_ctrl_dat_i(wb_s2m_ctrl_dat), 
     .wb_ctrl_ack_i(wb_s2m_ctrl_ack), 
     .wb_ctrl_err_i(wb_s2m_ctrl_err), 
-    .wb_ctrl_rty_i(wb_s2m_ctrl_rty)
+    .wb_ctrl_rty_i(wb_s2m_ctrl_rty),
+
+// PS2
+   .wb_ps2_adr_o(wb_m2s_ps2_adr),
+   .wb_ps2_dat_o(wb_m2s_ps2_dat),
+   .wb_ps2_sel_o(wb_m2s_ps2_sel),
+   .wb_ps2_we_o (wb_m2s_ps2_we ),
+   .wb_ps2_cyc_o(wb_m2s_ps2_cyc),
+   .wb_ps2_stb_o(wb_m2s_ps2_stb),
+   .wb_ps2_cti_o(wb_m2s_ps2_cti),
+   .wb_ps2_bte_o(wb_m2s_ps2_bte),
+   .wb_ps2_dat_i(wb_s2m_ps2_dat),
+   .wb_ps2_ack_i(wb_s2m_ps2_ack),
+   .wb_ps2_err_i(wb_s2m_ps2_err),
+   .wb_ps2_rty_i(wb_s2m_ps2_rty)
    );

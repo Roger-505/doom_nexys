@@ -52,6 +52,8 @@ module rvfpganexys
     output wire        o_accel_cs_n,
     output wire        o_accel_mosi,
     input wire         i_accel_miso,
+    inout wire         ps2_clk,
+    inout wire         ps2_data,
     output wire        accel_sclk,
     output wire [11:0] rgb,
     output wire hsync,
@@ -206,16 +208,6 @@ module rvfpganexys
       wire [9:0] y;
       wire pixel_tick;
 
-      // VGA test
-      // Testing displaying switches color
-      // represented as 12 bit RGB444 on VGA display
-      /*
-      always @(posedge clk_core)
-            rgb_test <= i_sw[11:0];
-
-      assign rgb = (i_sw[15] == 1'b1)   ? rgb_test : rgb_doom;
-    */
-
    swervolf_core
      #(.bootrom_file (bootrom_file),
        .clk_freq_hz  (32'd50_000_000))
@@ -291,7 +283,12 @@ module rvfpganexys
       .pixel_tick_o   (pixel_tick),
       .hsync_o        (hsync),
       .vsync_o        (vsync),
-      .rgb            (rgb));
+      .rgb            (rgb),
+
+     // PS2
+     .ps2_clk   (ps2_clk),
+     .ps2_data  (ps2_data)
+     );
 
    always @(posedge clk_core) begin
       o_led[15:0] <= gpio_out[15:0];

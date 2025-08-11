@@ -570,6 +570,41 @@ void IdentifyVersion (void)
 }
 
 
+// PS2 debug
+#define PS2_BASE        0x80020600
+#define PS2_DATA_REG    (*(volatile uint32_t *)(PS2_BASE + 0x00))
+#define PS2_STATUS_REG  (*(volatile uint32_t *)(PS2_BASE + 0x04))
+
+#define STATUS_FULL     (1 << 1)
+#define STATUS_EMPTY    (1 << 0)
+
+static void ps2_debug_loop() {
+    while (1) {
+        // Check if data is available
+        uint32_t status = PS2_STATUS_REG;
+        uint32_t data, ascii, pressed;
+
+        if (!(status & STATUS_EMPTY)) {
+            // Not empty, there is data to be read
+            data = PS2_DATA_REG;
+            ascii = data & 0x7f;
+            pressed = (data >> 7) & 0x01;
+
+            // Display info
+            printf("Key %s: ASCII = 0x%02X (%c)\n", 
+                    pressed ? "DOWN" : "UP", 
+                    ascii, 
+                    (ascii >= 32 && ascii <= 126) ? ascii : '.');
+        }
+
+        // Wait a bit
+        for (volatile int i = 0; i < 50000; i++){
+            __asm__("nop");
+        }
+    }
+}
+
+
 //
 // D_DoomMain
 //
@@ -597,6 +632,9 @@ void D_DoomMain (void)
              "RISC-V DOOM Startup v%i.%i\n"
              "----------------------------\n",
              VERSION/100,VERSION%100);
+
+    // Debugging the PS2 interface
+    // ps2_debug_loop();
 
     // init subsystems
     printf ("V_Init: allocate screens.\n");

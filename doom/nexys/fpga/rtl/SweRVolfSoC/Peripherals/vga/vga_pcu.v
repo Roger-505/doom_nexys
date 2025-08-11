@@ -135,11 +135,22 @@ module vga_pcu#(
     // Get palette RGB444. pixel_data indexes palette
 	assign pal_rd_addr_o = pixel_data[7:0];
 
-	assign rgb444 = {
-		pal_rd_data_i[11:8], 	// R[11: 8]
-		pal_rd_data_i[7:4], 	// G[ 7: 4]
-		pal_rd_data_i[3:0]   	// B[ 3: 0]
-	};
+    // Assign rgb with dithering
+    wire dither_en = double_x ^ double_y;
+    wire dither_r;
+    wire dither_g;
+    wire dither_b;
+
+    // 4 bits per channel, bits [3:0]
+    assign dither_r = (pal_rd_data_i[2] & dither_en) & ~& pal_rd_data_i[3:3]; // Only if bit 2 set and bit 3 not max
+    assign dither_g = (pal_rd_data_i[6] & dither_en) & ~& pal_rd_data_i[7:7];
+    assign dither_b = (pal_rd_data_i[10] & dither_en) & ~& pal_rd_data_i[11:11];
+
+    assign rgb444 = {
+            pal_rd_data_i[11:8] + dither_r,         // R[11: 8]
+            pal_rd_data_i[7:4]  + dither_g,         // G[ 7: 4]
+            pal_rd_data_i[3:0]  + dither_b          // B[ 3: 0]
+    };
 
     /* --- VGA registers --- */
     reg vs_in_vbl;

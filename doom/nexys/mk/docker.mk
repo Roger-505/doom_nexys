@@ -1,28 +1,28 @@
 DOCKER_FLAGS = --project-directory $(DOCKER_DIR)
 
-docker_build:
+docker-build:
 	$(ECHO) " DOCKER   BUILD -> $(APP)"
 	$(Q)export COMPOSE_BAKE=true
 	$(Q)$(DOCKER) $(DOCKER_FLAGS) build $(REDIRECT)
 	$(Q)$(DOCKER) $(DOCKER_FLAGS) create $(REDIRECT)
 
-docker_start:
+docker-start:
 	$(ECHO) " DOCKER  START -> $(APP)"
 	$(Q)$(DOCKER) $(DOCKER_FLAGS) up -d $(REDIRECT)
 
-docker_stop:
+docker-stop:
 	$(ECHO) " DOCKER   STOP -> $(APP)"
 	$(Q)$(DOCKER) $(DOCKER_FLAGS) down $(REDIRECT)
 
-docker_shell:
+docker-shell:
 	$(ECHO) " DOCKER   SHELL -> $(APP)"
 	$(Q)$(DOCKER) $(DOCKER_FLAGS) exec $(APP) $(SHELL) $(REDIRECT)
 
-docker_vcode:
+docker-vcode:
 	$(ECHO) " DOCKER   VCODE -> $(APP)"
 	$(ECHO) $(DOCKER) $(DOCKER_FLAGS) exec $(APP) $(VCODE) $(REDIRECT)
 
-docker_install_deps: 
+docker-install_deps: 
 	$(ECHO) " DOCKER   INSTALL_DEPS"
 	$(Q)sudo bash -c '\
 		set -e; \
@@ -35,7 +35,7 @@ docker_install_deps:
 	'
 
 
-# docker_clean:
+# docker-clean:
 # 	$(ECHO) " DOCKER   CLEAN -> $(APP)"
 # 	$(Q)$(DOCKER) 	   $(DOCKER_FLAGS) down		$(REDIRECT)
 #	$(Q)$(DOCKER_CONT) rm $(CONTAINER) $(REDIRECT)

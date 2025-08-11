@@ -205,6 +205,8 @@
 ./fpga/rtl/SweRVolfSoC/Peripherals/vga/wb_ram.v
 ./fpga/rtl/SweRVolfSoC/Peripherals/vga/wb_generic.v
 ./fpga/rtl/SweRVolfSoC/Peripherals/vga/vga_pcu.v
+./fpga/rtl/SweRVolfSoC/Peripherals/ps2/ps2.v
+./fpga/rtl/SweRVolfSoC/Peripherals/ps2/ps2_wb_fifo_wrapper.v
 
 --top-module rvfpgasim
 --exe

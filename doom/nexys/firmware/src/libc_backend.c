@@ -118,17 +118,6 @@ _open(const char *pathname, int flags)
 	fds[fd].len    = (size_t)(_binary_firmware_data_doom1_wad_end - _binary_firmware_data_doom1_wad_start);;
 	fds[fd].data   = fs[fn].addr;
 
-	// console_printf("Opened: %s as fd=%d\n", pathname, fd);
- 
-    /*   
-    while(1){
-        unsigned char *wad_data = (unsigned char*)0x00000000;
-
-        console_printf("WAD header bytes: %c%c%c%c\n",
-            wad_data[0], wad_data[1], wad_data[2], wad_data[3]);
-    }
-    */
-
 	return fd;
 }
 

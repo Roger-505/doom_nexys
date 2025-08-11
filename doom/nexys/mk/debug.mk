@@ -17,3 +17,21 @@ debug:
 debug_verilator:
 	$(ECHO) " DEBUG"
 	st -e $(DB) -x .gdbinit $(ELF) &
+
+help:
+	bash $(UTILS_DIR)/help.sh
+
+help-build:
+	bash $(UTILS_DIR)/help.sh build
+
+help-sim:
+	bash $(UTILS_DIR)/help.sh sim
+
+help-docker:
+	bash $(UTILS_DIR)/help.sh docker
+
+help-debug:
+	bash $(UTILS_DIR)/help.sh debug
+
+help-options:
+	bash $(UTILS_DIR)/help.sh options

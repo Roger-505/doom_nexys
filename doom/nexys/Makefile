@@ -169,6 +169,7 @@ else
 maybe_gen_bit: $(BIT_FILE)
 endif
 
+
 clean:
 	@rm -rf $(BUILD_DIR) *jou *log
 

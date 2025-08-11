@@ -78,12 +78,6 @@ module swervolf_core
     output wire        o_ram_rready,
     input wire 	       i_ram_init_done,
     input wire 	       i_ram_init_error,
-    inout wire [31:0]  io_data,
-    output wire [ 7          :0] AN,
-    output wire [ 6          :0] Digits_Bits,
-    output wire        o_accel_sclk,
-    output wire        o_accel_cs_n,
-    output wire        o_accel_mosi,
     
     // VGA signals 
     output wire video_on_o,
@@ -94,7 +88,20 @@ module swervolf_core
     output wire hsync_o,
     output wire vsync_o,
 
-    input wire         i_accel_miso);
+    // PS2 signals
+    inout wire ps2_clk,
+    inout wire ps2_data,
+
+    // Misc
+    inout   wire    [31:0]  io_data,
+    output  wire    [7:0]   AN,
+    output  wire    [6:0]   Digits_Bits,
+    output  wire            o_accel_sclk,
+    output  wire            o_accel_cs_n,
+    output  wire            o_accel_mosi,
+    input   wire            i_accel_miso
+   );
+
 
    localparam BOOTROM_SIZE = 32'h1000;
 
@@ -514,6 +521,29 @@ module swervolf_core
       assign pixel_tick_o = pixel_tick;
       assign hsync_o = hsync;
       assign vsync_o = vsync;
+
+    // PS2 top
+    ps2_wb_fifo_wrapper
+    ps2_wrapper_inst(
+    .clk        (clk),
+    .resetn     (rstn),
+
+    // Wishbone interface
+    .wb_stb_i   (wb_m2s_ps2_stb),
+    .wb_cyc_i   (wb_m2s_ps2_cyc),
+    .wb_we_i    (wb_m2s_ps2_we ),
+    .wb_sel_i   (wb_m2s_ps2_sel),
+    .wb_adr_i   (wb_m2s_ps2_adr),
+    .wb_dat_i   (wb_m2s_ps2_dat),
+    .wb_dat_o   (wb_s2m_ps2_dat),
+    .wb_ack_o   (wb_s2m_ps2_ack),
+    .wb_err_o   (wb_s2m_ps2_err),
+    .wb_rty_o   (wb_s2m_ps2_rty),
+
+    // PS/2 interface
+    .ps2_clk    (ps2_clk),
+    .ps2_data   (ps2_data)
+    );
 
    swerv_wrapper_dmi swerv_eh1
      (
