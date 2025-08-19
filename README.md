@@ -7,6 +7,9 @@ RISC-V platform easier with the code to adapt well split.
 A buildable original Linux-x11 version will hopefully kept to be
 able to test things locally a bit easier.
 
+- WARNING: The steps detailed ahead might download up to 30GB of data into your host. 
+  To make sure the installation does not cause any problems in the future, make sure you have at least 60GB of free memory on your disk.
+
 ## Features 
 
 - Playable Doom Shareware version
@@ -84,7 +87,23 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     "https://drive.usercontent.google.com/download?id=${FILEID}&confirm=t" \
      -O "${DOOM_NEXYS}/doom/nexys/scripts/docker/${FILENAME}"
     ```
-2. Build the Docker container. Issue the following commands: 
+2. Navigate to the directory that contains the master `Makefile` for the Nexys-A7 variant. Issue the following command:
+    ```bash
+    cd $DOOM_NEXYS/doom/nexys
+    ```
+3. Build the Docker container. This will take some time, as the Docker image used is based on (Gusanagy's Xilinx Vivado image)[https://www.printables.com/model/369914-mega65-nexys-a7-case], and Vivado is a heavy program. Issue the following commands: 
+    ```bash
+    make docker-build
+    ```
+4. Change the MODE jumper on the Nexys-A7 board to JTAG, and connect it to the host computer using a microUSB cable. 
+5. Start the Docker container. Issue the following command: 
+    ```bash
+    make docker-start
+    ```
+5. Run the build script for the Doom Nexys-A7 variant. This has to be ran as sudo, as the board will be flashed at this moment. Issue the following command: 
+    ```bash
+    sudo make all
+    ```
 
 ## ToDo
 
