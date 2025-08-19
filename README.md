@@ -12,14 +12,20 @@ able to test things locally a bit easier.
 
 ## Acknowledgments 
 
-This project was heavily inspired by and based on the work of [Sylvain "tnt" Munaut](https://github.com/smunaut). 
+Thanks to [Sylvain "tnt" Munaut](https://github.com/smunaut) for all his work, as this project is heavily inspired and based 
+on his Doom port to the iCE40 FPGA. 
 Please visit [his video](https://www.youtube.com/watch?v=3ZBAZ5QoCAk) where he explains how he made the backbone 
-of the FPGA Doom port on the iCE40 FPGA and leave a like. It's really cool.
+of the FPGA Doom port and leave a like. It's really cool.
 
 Additional projects that influenced development: 
 - [VeeRwolf](https://github.com/chipsalliance/VeeRwolf) - provided U-Boot bootloader and OpenOCD scripts.
 - [wb_ram](https://github.com/fusesoc/wb_ram) - provided Wishbone RAM generic memory for VGA palette and framebuffer.
 - [wb_ps2_keyboard](https://opencores.org/ocsvn/m1_core/m1_core/trunk/hdl/rtl/wb_ps2_keyboard/) - provided PS2 keyboard controller core.
+- [RVfpga](https://university.imgtec.com/rvfpga-el2-v3-0-english-downloads-page/)- provided SwerVolf SoC, Verilator testbench and SW tools for cross-compilation.
+
+## Gameplay 
+
+- TODO: Add video playing the game.
 
 ## Features 
 
@@ -87,6 +93,8 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     make run SIZE=big
     ```
 
+4. Enjoy! 
+
 ### Nexys-A7
 
 1. Setup the needed .zip files to create the Docker container. You can download them [here](https://drive.google.com/file/d/1fUjV1tkkXkeM8koNcrz5_lHd3CPA93h_/view)
@@ -127,10 +135,38 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     ```bash
     sudo make docker-shell
     ```
-5. From the recently opened Docker shell, run the build script for the Doom Nexys-A7 variant. This has to be ran as `sudo`, as the board will be flashed and loaded with the bitstream at this moment. Issue the following command: 
+5. From the recently opened Docker shell, run the build script for the Doom Nexys-A7 variant. Take in mind the following considerations:
+    - This has to be ran as `sudo`, as the board will be flashed and loaded with the bitstream at this moment. 
+    - This will take some time, as the QSPI flash erasing and writing process is lengthy. 
+    - After the board is flashed, it will boot using the bitstream loaded by JTAG. It will take some time to load the U-Boot image
+    from flash. 
+    - If you wish the bitstream persists across power-cycles, you may load it to a SD card which will reside in the Nexys-A7 microSD 
+    slot. See the description for the `sd` target after issuing `make help`.
+    - To load bitstreams using a microSD, the MODE jumper has to be changed to USB/SD, while the JP2 jumper has to be changed to SD.
+
+   Issue the following command: 
     ```bash
     sudo make all
     ```
+6. After the Doom main menu shows in the monitor, create a Python virtual environment for the Python script that handles I/O. }
+   Issue the following command: 
+    ```bash
+    python3 -m venv
+    ```
+7. Install the necessary packages. Issue the following command: 
+    ```bash
+    pip3 install pygame pyserial
+    ```
+8. Run the Python script that handles I/O. Take in mind the following considerations: 
+    - Keyboard and mouse may be used to play the game. 
+    - Controls may be seen by cliking the F2 key at any time.
+
+    Issue the following command: 
+    ```bash
+    python3 doom.py
+    ```
+
+9. Enjoy! 
 
 ## ToDo
 
@@ -152,5 +188,5 @@ to generate bitstreams faster. I could never figure this one out.
 - Sound support via Mono Audio Out jack
 - Custom 3D case for Nexys-A7 board (See this Mega65 emulator case as reference: https://www.printables.com/model/369914-mega65-nexys-a7-case)
 - Network support via Ethernet port
-- At it's current state, this project barely runs on hardware, but has many bugs that I am aware of. Debugging would
-be quite nice.
+- At it's current state, this project barely runs on hardware, but has many bugs everywhere. A lot of debugging is needed.
+- Load both the bitstream and the U-Boot image in flash, without having the need of using an extra SD card for storage. This might be accomplished using Vivado tools, or the current OpenOCD framework.
