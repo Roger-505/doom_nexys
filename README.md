@@ -4,7 +4,7 @@ Doom classic port to Nexys A7-100T FPGA board
 This is a port to try and make adapting/running doom to simple
 RISC-V platform easier with the code to adapt well split.
 
-A buildable original linux-x11 version will hopefully kept to be
+A buildable original Linux-x11 version will hopefully kept to be
 able to test things locally a bit easier.
 
 ## Features 
@@ -15,15 +15,77 @@ able to test things locally a bit easier.
 - Docker container for compilation and flashing
 - Verilator simulation for development
 
+## Dependencies 
+
+### Linux-X11 
+- X11 
+- Xephyr 
+- build-utils 
+
+For Debian/Ubuntu hosts, issue the following command to install the above dependencies: 
+    ```bash
+    sudo apt install build-utils xserver-xephyr
+    ```
+### Nexys-A7 
+
+- Docker Compose
+
+For Debian/Ubuntu hosts, issue the following command to install the above dependencies: 
+
+1. Clone this repository. Issue the following commands: 
+    ```bash
+    https://github.com/Roger-505/doom_nexys.git DOOM
+    cd $_
+    export DOOM_NEXYS=$(pwd)
+    ```
+2. Navigate to the directory that contains the master `Makefile` for the Nexys-A7 variant. Issue the following command:
+    ```bash
+    cd $DOOM_NEXYS/doom/nexys
+    ```
+3. Download the Docker dependencies. Issue the following command: 
+    ```bash
+    make docker-install_deps
+    ```
 ## Usage
 
-For Debian/Ubuntu hosts:
+For Debian/Ubuntu hosts, if not done yet already, clone the repository: 
+
+1. Clone this repository.
+    ```bash
+    https://github.com/Roger-505/doom_nexys.git DOOM
+    cd $_
+    export DOOM_NEXYS=$(pwd)
+    ```
 
 ### Linux-X11
 
+1. Navigate to the directory that contains the master `Makefile` for the Linux-X11 variant. Issue the following command: 
+    ```bash
+    cd $DOOM_NEXYS/doom/linux-x11
+    ```
+2. Build the Linux-X11 variant. Issue the following command: 
+    ```bash
+    make -j$(nproc)
+    ```
+3. Run the Linux-X11 variant. For documentation regarding the options available for this `Makefile`, run  `make help`. Issue the following command:
+    ```bash
+    make run SIZE=big
+    ```
+
 ### Nexys-A7
 
-## WIP features
+1. Setup the needed .zip files to create the Docker container. You can download them [here](https://drive.google.com/file/d/1fUjV1tkkXkeM8koNcrz5_lHd3CPA93h_/view)
+   and extract the file in `$DOOM_NEXYS/doom/nexys/scripts/docker`, or issue the following commands: 
+    ```bash
+    export FILENAME=doom_nexys_files.zip
+    export FILEID=1fUjV1tkkXkeM8koNcrz5_lHd3CPA93h_
+    wget --no-check-certificate \
+    "https://drive.usercontent.google.com/download?id=${FILEID}&confirm=t" \
+     -O "${DOOM_NEXYS}/doom/nexys/scripts/docker/${FILENAME}"
+    ```
+2. Build the Docker container. Issue the following commands: 
+
+## ToDo
 
 As this was initially developed in the span of 2 months for a college course
 project, many of the features that I wanted to add could not make it into the final deliverable.
@@ -41,7 +103,7 @@ to generate bitstreams faster. I could never figure this one out.
 - Expanded I-cache and D-cache (See swerv.config)
 - Optimized bitstream (Remove all unused logic from SoC; e.g. Accelerometer SPI, GPIO, etc.)
 - Sound support via Mono Audio Out jack
-- Custom 3D case for Nexys-A7 board (See this Mega65 emulator case as reference: https://github.com/Roger-505/doom_nexys.git)
+- Custom 3D case for Nexys-A7 board (See this Mega65 emulator case as reference: https://www.printables.com/model/369914-mega65-nexys-a7-case)
 - Network support via Ethernet port
 - At it's current state, this project barely runs on hardware, but has many bugs that I am aware of. Debugging would
 be quite nice.
