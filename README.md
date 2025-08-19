@@ -149,7 +149,7 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     ```bash
     sudo make all
     ```
-6. After the Doom main menu shows in the monitor, create a Python virtual environment for the Python script that handles I/O. }
+6. After the Doom main menu shows in the monitor, create a Python virtual environment for the Python script that handles I/O.
    Issue the following command: 
     ```bash
     python3 -m venv
