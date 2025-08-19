@@ -101,7 +101,13 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     ```bash
     sudo make docker-build
     ```
-4. Change the MODE jumper on the Nexys-A7 board to JTAG, and connect it to the host computer using a microUSB cable. 
+4. Take your Nexys-A7 board and follow the next steps. 
+    - Change the MODE jumper to JTAG
+    - Connect to a monitor using a VGA cable.
+    - Connect to the host computer using a microUSB cable
+    - Caution: Changing the hardware configuration after the Docker container has started might 
+      prevent loading programs to the board.
+
 5. Start the Docker container. Issue the following command: 
     ```bash
     sudo make docker-start
@@ -110,7 +116,7 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     ```bash
     sudo make docker-shell
     ```
-5. Run the build script for the Doom Nexys-A7 variant. This has to be ran as sudo, as the board will be flashed at this moment. Issue the following command: 
+5. Run the build script for the Doom Nexys-A7 variant. This has to be ran as `sudo`, as the board will be flashed and loaded with the bitstream at this moment. Issue the following command: 
     ```bash
     make all
     ```
