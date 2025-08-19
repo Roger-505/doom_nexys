@@ -22,7 +22,7 @@ Additional projects that influenced development:
 - [wb_ram](https://github.com/fusesoc/wb_ram) - provided Wishbone RAM generic memory for VGA palette and framebuffer.
 - [wb_ps2_keyboard](https://opencores.org/ocsvn/m1_core/m1_core/trunk/hdl/rtl/wb_ps2_keyboard/) - provided PS2 keyboard controller core.
 - [RVfpga](https://university.imgtec.com/rvfpga-el2-v3-0-english-downloads-page/)- provided SwerVolf SoC, Verilator testbench and SW tools for cross-compilation.
-- My professor Marco Villalta for providing a base Docker Compose framework, which I used as a base for this project.
+- My professor MSc. Marco Villalta for providing a base Docker Compose framework, which I used as a base for this project.
 
 ## Gameplay 
 
