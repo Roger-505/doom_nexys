@@ -22,10 +22,11 @@ able to test things locally a bit easier.
 - Xephyr 
 - build-utils 
 
-For Debian/Ubuntu hosts, issue the following command to install the above dependencies: 
+1. For Debian/Ubuntu hosts, issue the following command to install the above dependencies: 
     ```bash
     sudo apt install build-utils xserver-xephyr
     ```
+
 ### Nexys-A7 
 
 - Docker Compose
