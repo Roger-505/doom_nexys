@@ -97,7 +97,7 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     - The `docker-install_deps` make target used previously does not add $USER to the docker group, so `sudo` will have to be used to execute all Docker related commands. 
     - For documentation regarding the options available for this `Makefile`, run `make help`.
 
-Issue the following command:
+    Issue the following command:
     ```bash
     sudo make docker-build
     ```
