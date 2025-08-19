@@ -96,6 +96,7 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     - This will take some time, as the Docker image used is based on [Gusanagy's Xilinx Vivado image](https://hub.docker.com/r/gusanagy/xilinx-vivado), and Vivado is a heavy program. 
     - The `docker-install_deps` make target used previously does not add $USER to the docker group, so `sudo` will have to be used to execute all Docker related commands. 
     - For documentation regarding the options available for this `Makefile`, run `make help`.
+
 Issue the following command:
     ```bash
     sudo make docker-build
