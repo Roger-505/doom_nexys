@@ -86,23 +86,32 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     wget --no-check-certificate \
     "https://drive.usercontent.google.com/download?id=${FILEID}&confirm=t" \
      -O "${DOOM_NEXYS}/doom/nexys/scripts/docker/${FILENAME}"
+    unzip $DOOM_NEXYS/doom/nexys/scripts/docker/$FILENAME
     ```
 2. Navigate to the directory that contains the master `Makefile` for the Nexys-A7 variant. Issue the following command:
     ```bash
     cd $DOOM_NEXYS/doom/nexys
     ```
-3. Build the Docker container. This will take some time, as the Docker image used is based on (Gusanagy's Xilinx Vivado image)[https://www.printables.com/model/369914-mega65-nexys-a7-case], and Vivado is a heavy program. Issue the following commands: 
+3. Build the Docker container. Take in mind the following considerations: 
+    - This will take some time, as the Docker image used is based on [Gusanagy's Xilinx Vivado image](https://hub.docker.com/r/gusanagy/xilinx-vivado), and Vivado is a heavy program. 
+    - The `docker-install_deps` make target used previously does not add $USER to the docker group, so `sudo` will have to be used to execute all Docker related commands. 
+    - For documentation regarding the options available for this `Makefile`, run `make help`.
+Issue the following command:
     ```bash
-    make docker-build
+    sudo make docker-build
     ```
 4. Change the MODE jumper on the Nexys-A7 board to JTAG, and connect it to the host computer using a microUSB cable. 
 5. Start the Docker container. Issue the following command: 
     ```bash
-    make docker-start
+    sudo make docker-start
+    ```
+6. Start a Docker shell. Issue the following command: 
+    ```bash
+    sudo make docker-shell
     ```
 5. Run the build script for the Doom Nexys-A7 variant. This has to be ran as sudo, as the board will be flashed at this moment. Issue the following command: 
     ```bash
-    sudo make all
+    make all
     ```
 
 ## ToDo
