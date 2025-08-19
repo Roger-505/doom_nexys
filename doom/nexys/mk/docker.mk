@@ -3,7 +3,7 @@ DOCKER_FLAGS = --project-directory $(DOCKER_DIR)
 docker-build:
 	$(ECHO) " DOCKER   BUILD -> $(APP)"
 	$(Q)export COMPOSE_BAKE=true
-	$(Q)$(DOCKER) $(DOCKER_FLAGS) build $(REDIRECT)
+	$(Q)$(DOCKER) $(DOCKER_FLAGS) build --no-cache $(REDIRECT)
 	$(Q)$(DOCKER) $(DOCKER_FLAGS) create $(REDIRECT)
 
 docker-start:
@@ -16,7 +16,7 @@ docker-stop:
 
 docker-shell:
 	$(ECHO) " DOCKER   SHELL -> $(APP)"
-	$(Q)$(DOCKER) $(DOCKER_FLAGS) exec $(APP) $(SHELL) $(REDIRECT)
+	$(DOCKER) $(DOCKER_FLAGS) exec $(APP) $(SHELL)
 
 docker-vcode:
 	$(ECHO) " DOCKER   VCODE -> $(APP)"
