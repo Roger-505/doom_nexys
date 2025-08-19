@@ -191,3 +191,4 @@ to generate bitstreams faster. I could never figure this one out.
 - Network support via Ethernet port
 - At it's current state, this project barely runs on hardware, but has many bugs everywhere. A lot of debugging is needed.
 - Load both the bitstream and the U-Boot image in flash, without having the need of using an extra SD card for storage. This might be accomplished using Vivado tools, or the current OpenOCD framework.
+- Remove the dependency on Google Drive. I had to use it because I never got Git LFS to work. A better approach must exist.
