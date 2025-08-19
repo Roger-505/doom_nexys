@@ -7,8 +7,19 @@ RISC-V platform easier with the code to adapt well split.
 A buildable original Linux-x11 version will hopefully kept to be
 able to test things locally a bit easier.
 
-- WARNING: The steps detailed ahead might download up to 30GB of data into your host. 
-  To make sure the installation does not cause any problems in the future, make sure you have at least 60GB of free memory on your disk.
+- WARNING: The steps detailed ahead might download up to 50GB of data into your host. 
+  To make sure the installation does not cause any problems in the future, make sure you have at least 100GB of free memory on your disk.
+
+## Acknowledgments 
+
+This project was heavily inspired by and based on the work of [Sylvain "tnt" Munaut](https://github.com/smunaut). 
+Please visit [his video](https://www.youtube.com/watch?v=3ZBAZ5QoCAk) where he explains how he made the backbone 
+of the FPGA Doom port on the iCE40 FPGA and leave a like. It's really cool.
+
+Additional projects that influenced development: 
+- [VeeRwolf](https://github.com/chipsalliance/VeeRwolf) - provided U-Boot bootloader and OpenOCD scripts.
+- [wb_ram](https://github.com/fusesoc/wb_ram) - provided Wishbone RAM generic memory for VGA palette and framebuffer.
+- [wb_ps2_keyboard](https://opencores.org/ocsvn/m1_core/m1_core/trunk/hdl/rtl/wb_ps2_keyboard/) - provided PS2 keyboard controller core.
 
 ## Features 
 
@@ -86,7 +97,7 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     wget --no-check-certificate \
     "https://drive.usercontent.google.com/download?id=${FILEID}&confirm=t" \
      -O "${DOOM_NEXYS}/doom/nexys/scripts/docker/${FILENAME}"
-    unzip $DOOM_NEXYS/doom/nexys/scripts/docker/$FILENAME
+    unzip $DOOM_NEXYS/doom/nexys/scripts/docker/$FILENAME -d $DOOM_NEXYS/doom/nexys/scripts/docker
     ```
 2. Navigate to the directory that contains the master `Makefile` for the Nexys-A7 variant. Issue the following command:
     ```bash
@@ -102,9 +113,9 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     sudo make docker-build
     ```
 4. Take your Nexys-A7 board and follow the next steps. 
-    - Change the MODE jumper to JTAG
+    - Change the MODE jumper to JTAG.
     - Connect to a monitor using a VGA cable.
-    - Connect to the host computer using a microUSB cable
+    - Connect to the host computer using a microUSB cable.
     - Caution: Changing the hardware configuration after the Docker container has started might 
       prevent loading programs to the board.
 
@@ -116,9 +127,9 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     ```bash
     sudo make docker-shell
     ```
-5. Run the build script for the Doom Nexys-A7 variant. This has to be ran as `sudo`, as the board will be flashed and loaded with the bitstream at this moment. Issue the following command: 
+5. From the recently opened Docker shell, run the build script for the Doom Nexys-A7 variant. This has to be ran as `sudo`, as the board will be flashed and loaded with the bitstream at this moment. Issue the following command: 
     ```bash
-    make all
+    sudo make all
     ```
 
 ## ToDo
