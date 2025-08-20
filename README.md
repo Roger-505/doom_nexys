@@ -43,7 +43,7 @@ Additional projects that influenced development:
 - Xephyr 
 - build-utils 
 
-1. For Debian/Ubuntu hosts, issue the following command to install the above dependencies: 
+1. For Debian/Ubuntu hosts that use a desktop environment that already relies on X11 (e.g. GNOME, KDE, Xfce), issue the following command to install the above dependencies: 
     ```bash
     sudo apt install build-utils xserver-xephyr
     ```
@@ -136,7 +136,13 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     ```bash
     sudo make docker-shell
     ```
-5. From the recently opened Docker shell, run the build script for the Doom Nexys-A7 variant. Take in mind the following considerations:
+7. Change to the currently working branch. There's a problem with Boot that does not allow the main branch changes to Boot the game.
+   From the recently opened Docker shell session, issue the following command:
+    ```bash
+    git checkout working-doom
+    ```
+
+8. From the recently opened Docker shell, run the build script for the Doom Nexys-A7 variant. Take in mind the following considerations:
     - This has to be ran as `sudo`, as the board will be flashed and loaded with the bitstream at this moment. 
     - This will take some time, as the QSPI flash erasing and writing process is lengthy. 
     - After the board is flashed, it will boot using the bitstream loaded by JTAG. It will take some time to load the U-Boot image
@@ -147,7 +153,7 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
 
    Issue the following command: 
     ```bash
-    sudo make all
+    make all
     ```
 6. After the Doom main menu shows in the monitor, create a Python virtual environment for the Python script that handles I/O.
    Issue the following command: 
@@ -184,11 +190,12 @@ to generate bitstreams faster. I could never figure this one out.
 - Custom messages displayed on 7-Seg display according to game events
 - PS2 keyboard support. I tried to do this, but was not able to figure out key up events, only key downs.
 - Full Plug&Play experience (No UART for game controls, game boots from plugging to +5V)
-- Expanded I-cache and D-cache (See swerv.config)
+- Expanded I-cache, D-cache, branch predictor buffers, or even ICCM support if possible (See [swerv.config](https://github.com/Roger-505/doom_nexys/blob/master/doom/nexys/fpga/rtl/SweRVolfSoC/SweRVEh1CoreComplex/include/swerv.config))
 - Optimized bitstream (Remove all unused logic from SoC; e.g. Accelerometer SPI, GPIO, etc.)
 - Sound support via Mono Audio Out jack
-- Custom 3D case for Nexys-A7 board (See this Mega65 emulator case as reference: https://www.printables.com/model/369914-mega65-nexys-a7-case)
+- Custom 3D case for Nexys-A7 board (See this [Mega65 emulator case](https://www.printables.com/model/369914-mega65-nexys-a7-case) as reference) 
 - Network support via Ethernet port
 - At it's current state, this project barely runs on hardware, but has many bugs everywhere. A lot of debugging is needed.
 - Load both the bitstream and the U-Boot image in flash, without having the need of using an extra SD card for storage. This might be accomplished using Vivado tools, or the current OpenOCD framework.
 - Remove the dependency on Google Drive. I had to use it because I never got Git LFS to work. A better approach must exist.
+- Custom .wad file loading.
