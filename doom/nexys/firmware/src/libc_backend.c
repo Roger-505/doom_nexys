@@ -31,6 +31,8 @@
 
 
 // #define LIBC_DEBUG
+
+
 // HEAP handling
 // -------------
 
@@ -52,13 +54,16 @@ _sbrk(intptr_t increment)
 // File handling
 // -------------
 /* Flash "filesystem" */
+extern const unsigned char _binary_firmware_data_doom1_wad_start[];
+extern const unsigned char _binary_firmware_data_doom1_wad_end[];
 
 static struct {
  	const char *name;	/* Filename */
 	size_t  len;	    /* Length */
 	void *  addr;	    /* Address in flash */
 } fs[] = {
-    { "doom1.wad", WAD_RAM_SIZE, WAD_RAM_ADDR},
+    { "doom1.wad", 0, 
+        (void*)_binary_firmware_data_doom1_wad_start},
 	{ NULL }
 };
 
@@ -110,8 +115,19 @@ _open(const char *pathname, int flags)
 	/* "Open" file */
 	fds[fd].type   = FD_FLASH;
 	fds[fd].offset = 0;
-	fds[fd].len    = fs[fn].len;
+	fds[fd].len    = (size_t)(_binary_firmware_data_doom1_wad_end - _binary_firmware_data_doom1_wad_start);;
 	fds[fd].data   = fs[fn].addr;
+
+	// console_printf("Opened: %s as fd=%d\n", pathname, fd);
+ 
+    /*   
+    while(1){
+        unsigned char *wad_data = (unsigned char*)0x00000000;
+
+        console_printf("WAD header bytes: %c%c%c%c\n",
+            wad_data[0], wad_data[1], wad_data[2], wad_data[3]);
+    }
+    */
 
 	return fd;
 }
@@ -243,3 +259,4 @@ access(const char *pathname, int mode)
 
 	return 0;
 }
+

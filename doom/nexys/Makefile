@@ -77,6 +77,8 @@ ELF  := $(BUILD_DIR)/$(TARGET).elf
 BIN  := $(BUILD_DIR)/$(TARGET).bin
 UB   := $(BUILD_DIR)/$(TARGET).ub
 BIT	 := $(F_BIT_DIR)/$(TARGET).bit
+WADO := $(BUILD_DIR)/$(DATA).o
+
 
 # === Bootrom outputs ===
 B_MEM := $(BUILD_DIR)/$(BOOT_TARGET).mem
@@ -160,7 +162,7 @@ ifeq ($(SD),1)
 all: gen_rom maybe_gen_bit gen_bin gen_ub sd
 else
 # all: gen_rom maybe_gen_bit gen_bin gen_ub flash-uboot flash-wad program serial
-all: gen_rom maybe_gen_bit gen_bin gen_ub flash-uboot flash-wad program serial
+all: gen_rom maybe_gen_bit gen_bin gen_ub flash program serial
 endif
 
 # Conditional bitstream generation

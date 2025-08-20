@@ -2,10 +2,19 @@ OUTPUT_ARCH("riscv")
 ENTRY(_start)
 
 MEMORY {
+    WAD (rwx)    : ORIGIN = 0x00000000, LENGTH = 12M     /* doom1.wad */
     RAM (wxa!ri) : ORIGIN = 0x00c00000, LENGTH = 64M
 }
 
 SECTIONS {
+    /* Place WAD at 0x00000000 */
+    .wad : {
+        _binary_doom1_wad_start = .;
+        KEEP(*(.wad))
+        _binary_doom1_wad_end = .;
+    } > WAD
+
+
     /* Top of stack is at the end of RAM */
     __stacktop = ORIGIN(RAM) + LENGTH(RAM);
 

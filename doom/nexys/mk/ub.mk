@@ -1,11 +1,11 @@
 # === Vector addresses === #
-# RESET_VECTOR ?= 0x00420000	
+# RESET_VECTOR ?= 0x00420000
 RESET_VECTOR  ?= 0x00c00000
-RAM_BASE_ADDR ?= 0x00c00000
+RAM_BASE_ADDR ?= 0x0
 
 gen_ub: $(UB)
 
-# === Build U-boot image === # 
+# === Build U-boot image === #
 $(UB): $(BIN) | $(BIN_DIR)
 	$(ECHO) " MKIMAGE  $(notdir $(@))"
 	$(Q)$(UBOOT_MK)\
@@ -17,3 +17,4 @@ $(UB): $(BIN) | $(BIN_DIR)
 	 -n '$(@F)' \
 	 -d $< \
 	 $@ $(REDIRECT)
+
