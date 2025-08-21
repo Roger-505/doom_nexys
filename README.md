@@ -26,7 +26,7 @@ Additional projects that influenced development:
 
 ## Gameplay 
 
-![video](doc/doom_gameplay.mp4)
+[![Watch the video](docs/doom-title-screen.jpg)](https://youtu.be/Zxw-tnh0l84?si=FkYY6bbTwgwiGtnV)
 
 ## Features 
 
