@@ -26,7 +26,7 @@ Additional projects that influenced development:
 
 ## Gameplay 
 
-- TODO: Add video playing the game.
+![video](doc/doom_gameplay.mp4)
 
 ## Features 
 
@@ -135,15 +135,8 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
 6. Start a Docker shell. Issue the following command: 
     ```bash
     sudo make docker-shell
-    ```
-7. Change to the currently working branch. There's a problem with Boot that does not allow the main branch changes to Boot the game.
-   From the recently opened Docker shell session, issue the following command:
-    ```bash
-    git checkout working-doom
-    ```
 
-8. From the recently opened Docker shell, run the build script for the Doom Nexys-A7 variant. Take in mind the following considerations:
-    - This has to be ran as `sudo`, as the board will be flashed and loaded with the bitstream at this moment. 
+7. From the recently opened Docker shell, run the build script for the Doom Nexys-A7 variant. Take in mind the following considerations:
     - This will take some time, as the QSPI flash erasing and writing process is lengthy. 
     - After the board is flashed, it will boot using the bitstream loaded by JTAG. It will take some time to load the U-Boot image
     from flash. 
@@ -155,25 +148,25 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
     ```bash
     make all
     ```
-6. After the Doom main menu shows in the monitor, create a Python virtual environment for the Python script that handles I/O.
+8. After the Doom main menu shows in the monitor, create a Python virtual environment for the Python script that handles I/O.
    Issue the following command: 
     ```bash
-    python3 -m venv
+    python3 -m venv venv
     ```
-7. Install the necessary packages. Issue the following command: 
+9. Install the necessary packages. Issue the following command: 
     ```bash
     pip3 install pygame pyserial
     ```
-8. Run the Python script that handles I/O. Take in mind the following considerations: 
+10. Run the Python script that handles I/O. Take in mind the following considerations: 
     - Keyboard and mouse may be used to play the game. 
-    - Controls may be seen by cliking the F2 key at any time.
+    - Controls may be seen by cliking the F1 key at any time.
 
     Issue the following command: 
     ```bash
     python3 doom.py
     ```
 
-9. Enjoy! 
+11. Enjoy! 
 
 ## ToDo
 
