@@ -26,7 +26,9 @@ Additional projects that influenced development:
 
 ## Gameplay 
 
-[![Watch the video](docs/doom-title-screen.jpg)](https://youtu.be/Zxw-tnh0l84?si=FkYY6bbTwgwiGtnV)
+https://github.com/user-attachments/assets/01da8d51-1627-4c34-ad94-fb977ca38b18
+
+[![Watch a longer gameplay on YouTube](docs/doom-title-screen.jpg)](https://youtu.be/Zxw-tnh0l84?si=FkYY6bbTwgwiGtnV)
 
 ## Features 
 
