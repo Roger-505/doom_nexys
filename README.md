@@ -58,7 +58,7 @@ For Debian/Ubuntu hosts, issue the following command to install the above depend
 
 1. Clone this repository. Issue the following commands: 
     ```bash
-    https://github.com/Roger-505/doom_nexys.git DOOM
+    git clone https://github.com/Roger-505/doom_nexys.git DOOM
     cd $_
     export DOOM_NEXYS=$(pwd)
     ```
@@ -76,7 +76,7 @@ For Debian/Ubuntu hosts, if not done yet already, clone the repository:
 
 1. Clone this repository.
     ```bash
-    https://github.com/Roger-505/doom_nexys.git DOOM
+    git clone https://github.com/Roger-505/doom_nexys.git DOOM
     cd $_
     export DOOM_NEXYS=$(pwd)
     ```
